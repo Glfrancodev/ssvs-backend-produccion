@@ -72,7 +72,6 @@ public class UsuarioController {
           usuarioActualizado.setNombre(usuario.getNombre());
           usuarioActualizado.setApellido(usuario.getApellido());
           usuarioActualizado.setCorreo(usuario.getCorreo());
-          usuarioActualizado.setSexo(usuario.getSexo());
           usuarioActualizado.setRol(usuario.getRol());
           return ResponseEntity.ok(usuarioService.saveUsuario(usuarioActualizado));
         } else {

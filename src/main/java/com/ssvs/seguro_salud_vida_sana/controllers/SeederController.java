@@ -28,6 +28,12 @@ public class SeederController{
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private MedicoRepository medicoRepository;
+
+    @Autowired
+    private AseguradoRepository aseguradoRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -38,6 +44,8 @@ public class SeederController{
         seedRoles();
         seedRolPermisos();
         seedUsuarios();
+        seedMedico();
+        seedAsegurado();
     }
 
     private void seedPermisos() {
@@ -179,52 +187,124 @@ public class SeederController{
 
             if (superUsuario.isPresent() && asegurado.isPresent() && medico.isPresent()) {
                 Usuario u1 = new Usuario();
+                u1.setCi("1234567");
                 u1.setCorreo("superusuario1@gmail.com");
                 u1.setContrasena(passwordEncoder.encode("Superusuario1pass"));
                 u1.setNombre("Super");
                 u1.setApellido("Usuario");
-                u1.setSexo('M');
                 u1.setEstaActivo(true);
                 u1.setRol(superUsuario.get());
 
                 Usuario u2 = new Usuario();
+                u2.setCi("7654321");
                 u2.setCorreo("asegurado1@gmail.com");
                 u2.setContrasena(passwordEncoder.encode("asegurado1pass"));
                 u2.setNombre("Asegurado");
                 u2.setApellido("Pro");
-                u2.setSexo('M');
                 u2.setEstaActivo(true);
                 u2.setRol(asegurado.get());
 
                 Usuario u3 = new Usuario();
+                u3.setCi("1111111");
                 u3.setCorreo("medico1@gmail.com");
                 u3.setContrasena(passwordEncoder.encode("medico1pass"));
                 u3.setNombre("Medico");
                 u3.setApellido("Vip");
-                u3.setSexo('F');
                 u3.setEstaActivo(true);
                 u3.setRol(medico.get());
 
                 Usuario u4 = new Usuario();
+                u4.setCi("2222222");
                 u4.setCorreo("gabrielLopezmedico@gmail.com");
                 u4.setContrasena(passwordEncoder.encode("medico1pass"));
                 u4.setNombre("Gabriel");
                 u4.setApellido("López");
-                u4.setSexo('M');
                 u4.setEstaActivo(true);
                 u4.setRol(medico.get());
 
                 Usuario u5 = new Usuario();
+                u5.setCi("33333333");
                 u5.setCorreo("jackmedico@gmail.com");
                 u5.setContrasena(passwordEncoder.encode("medico1pass"));
                 u5.setNombre("Jack");
                 u5.setApellido("López");
-                u5.setSexo('M');
                 u5.setEstaActivo(true);
                 u5.setRol(medico.get());
+                
+                Usuario u6 = new Usuario();
+                u6.setCi("4444444");
+                u6.setCorreo("asegurado2@gmail.com");
+                u6.setContrasena(passwordEncoder.encode("asegurado1pass"));
+                u6.setNombre("Asegurado 2");
+                u6.setApellido("Prueba");
+                u6.setEstaActivo(true);
+                u6.setRol(asegurado.get());
 
-                usuarioRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5));
+                Usuario u7 = new Usuario();
+                u7.setCi("5555555");
+                u7.setCorreo("asegurado3@gmail.com");
+                u7.setContrasena(passwordEncoder.encode("asegurado1pass"));
+                u7.setNombre("Asegurado 3");
+                u7.setApellido("Prueba");
+                u7.setEstaActivo(true);
+                u7.setRol(asegurado.get());
+
+                usuarioRepository.saveAll(Arrays.asList(u1, u2, u3, u4, u5, u6, u7));
             }
         }
     }
+    private void seedMedico() {
+        if (medicoRepository.count() == 0) {
+            Optional<Usuario> usuario1 = usuarioRepository.findByCorreo("medico1@gmail.com");
+            Optional<Usuario> usuario2 = usuarioRepository.findByCorreo("gabrielLopezmedico@gmail.com");
+            Optional<Usuario> usuario3 = usuarioRepository.findByCorreo("jackmedico@gmail.com");
+    
+            if (usuario1.isPresent() && usuario2.isPresent() && usuario3.isPresent()) {
+                Medico m1 = new Medico();
+                m1.setItem("M001");
+                m1.setUsuario(usuario1.get());
+
+                Medico m2 = new Medico();
+                m2.setItem("M002");
+                m2.setUsuario(usuario2.get());
+    
+                Medico m3 = new Medico();
+                m3.setItem("M003");
+                m3.setUsuario(usuario3.get());
+    
+                medicoRepository.saveAll(Arrays.asList(m1, m2, m3));
+            }
+        }
+    }
+    
+    private void seedAsegurado() {
+        if (aseguradoRepository.count() == 0) {
+            Optional<Usuario> usuario1 = usuarioRepository.findByCorreo("asegurado1@gmail.com");
+            Optional<Usuario> usuario2 = usuarioRepository.findByCorreo("asegurado2@gmail.com");
+            Optional<Usuario> usuario3 = usuarioRepository.findByCorreo("asegurado3@gmail.com");
+    
+            if (usuario1.isPresent() && usuario2.isPresent() && usuario3.isPresent()) {
+                Asegurado a1 = new Asegurado();
+                a1.setTipoSangre("O+");
+                a1.setSexo('M');
+                a1.setFechaNacimiento(LocalDate.of(1990, 5, 20));
+                a1.setUsuario(usuario1.get());
+    
+                Asegurado a2 = new Asegurado();
+                a2.setTipoSangre("A-");
+                a2.setSexo('F');
+                a2.setFechaNacimiento(LocalDate.of(1985, 8, 15));
+                a2.setUsuario(usuario2.get());
+    
+                Asegurado a3 = new Asegurado();
+                a3.setTipoSangre("B+");
+                a3.setSexo('M');
+                a3.setFechaNacimiento(LocalDate.of(2000, 12, 5));
+                a3.setUsuario(usuario3.get());
+    
+                aseguradoRepository.saveAll(Arrays.asList(a1, a2, a3));
+            }
+        }
+    }    
+
 }

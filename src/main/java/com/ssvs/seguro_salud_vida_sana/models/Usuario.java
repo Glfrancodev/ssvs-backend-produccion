@@ -1,14 +1,18 @@
 package com.ssvs.seguro_salud_vida_sana.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +21,9 @@ public class Usuario {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+
+  @Column(name = "ci")
+  private String ci;
 
   @Column(name = "correo")
   private String correo;
@@ -30,8 +37,6 @@ public class Usuario {
   @Column(name = "apellido")
   private String apellido;
 
-  @Column(name = "sexo")
-  private char sexo;
   @Column(name = "esta_activo")
   private boolean estaActivo;
 
@@ -41,32 +46,26 @@ public class Usuario {
   @JsonIgnoreProperties("usuarios")
   private Rol rol;
 
-  // // Relacion Usuario con Direccion 1 a n
-  // @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  // @JsonIgnore
-  // private Set<Direccion> direcciones;
-
-  // // Relacion Usuario con UsuarioDireccion 1 a n
-  // @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  // @JsonIgnore
-  // private Set<UsuarioSucursal> usuarioSucursales;
-
-  // // Relacion Usuario con NotaVenta 1 a n
-  // @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  // @JsonIgnore
-  // private Set<NotaVenta> notasVentas;
+  // Relacion Usuario con Asegurado 1 a 1
+  @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Asegurado asegurado;
+  // Relacion Usuario con Medico 1 a 1
+  @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Medico medico;
 
   // Constructor por defecto
   public Usuario() {
   }
 
   // Constructor con parámetros
-  public Usuario(String correo, String contrasena, String nombre, String apellido, char sexo, boolean esta_activo) {
+  public Usuario(String ci, String correo, String contrasena, String nombre, String apellido, char sexo, boolean esta_activo) {
+    this.ci = ci;
     this.correo = correo;
     this.contrasena = contrasena;
     this.nombre = nombre;
     this.apellido = apellido;
-    this.sexo = sexo;
     this.estaActivo = esta_activo;
   }
   // Getters y Setters
@@ -75,6 +74,12 @@ public class Usuario {
   }
   public void setId(Long id) {
     this.id = id;
+  }
+  public String getCi() {
+    return ci;
+  }
+  public void setCi(String ci) {
+    this.ci = ci;
   }
   public String getCorreo() {
     return correo;
@@ -100,12 +105,6 @@ public class Usuario {
   public void setApellido(String apellido){
     this.apellido = apellido;
   }
-  public char getSexo(){
-    return sexo;
-  }
-  public void setSexo(char sexo){
-    this.sexo = sexo;
-  }
 
   public boolean isEstaActivo(){
     return estaActivo;
@@ -122,26 +121,16 @@ public class Usuario {
     this.rol = rol;
   }
 
-  // public Set<UsuarioSucursal> getUsuarioSucursales(){
-  //   return usuarioSucursales;
-  // }
-  // public void setUsuarioSucursales(Set<UsuarioSucursal> usuarioSucursales){
-  //   this.usuarioSucursales = usuarioSucursales;
-  // }
-
-  // public Set<Direccion> getDirecciones(){
-  //   return direcciones;
-  // }
-  // public void setDirecciones(Set<Direccion> direcciones){
-  //   this.direcciones = direcciones;
-  // }
-
-  // public Set<NotaVenta> getNotasVentas(){
-  //   return notasVentas;
-  // }
-
-  // public void setNotasVentas(Set<NotaVenta> notasVentas){
-  //   this.notasVentas = notasVentas;
-  // }
-
+  public Asegurado setAsegurado(){
+    return asegurado;
+  }
+  public void setAsegurado(Asegurado asegurado){
+    this.asegurado= asegurado;
+  }
+  public Medico setMedico(){
+    return medico;
+  }
+  public void setMedico(Medico medico){
+    this.medico = medico;
+  }
 }
