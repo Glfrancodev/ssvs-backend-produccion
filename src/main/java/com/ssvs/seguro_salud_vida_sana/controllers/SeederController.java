@@ -122,55 +122,43 @@ public class SeederController{
                     && crearRol.isPresent() && verRol.isPresent()
                     && editarRol.isPresent() && eliminarRol.isPresent()) {
 
-                LocalDate fechaAsignacion = LocalDate.of(2024, 11, 02);
-
                 RolPermiso rp1 = new RolPermiso();
-                rp1.setFechaAsignacion(fechaAsignacion);
                 rp1.setRol(superUsuario.get());
                 rp1.setPermiso(crearRol.get());
 
                 RolPermiso rp2 = new RolPermiso();
-                rp2.setFechaAsignacion(fechaAsignacion);
                 rp2.setRol(superUsuario.get());
                 rp2.setPermiso(verRol.get());
 
                 RolPermiso rp3 = new RolPermiso();
-                rp3.setFechaAsignacion(fechaAsignacion);
                 rp3.setRol(superUsuario.get());
                 rp3.setPermiso(editarRol.get());
 
                 RolPermiso rp4 = new RolPermiso();
-                rp4.setFechaAsignacion(fechaAsignacion);
                 rp4.setRol(superUsuario.get());
                 rp4.setPermiso(eliminarRol.get());
 
                 RolPermiso rp7 = new RolPermiso();
-                rp7.setFechaAsignacion(fechaAsignacion);
                 rp7.setRol(superUsuario.get());
                 rp7.setPermiso(crearEspecialidad.get());
 
                 RolPermiso rp8 = new RolPermiso();
-                rp8.setFechaAsignacion(fechaAsignacion);
                 rp8.setRol(superUsuario.get());
                 rp8.setPermiso(verEspecialidad.get());
 
                 RolPermiso rp9 = new RolPermiso();
-                rp9.setFechaAsignacion(fechaAsignacion);
                 rp9.setRol(superUsuario.get());
                 rp9.setPermiso(editarEspecialidad.get());
 
                 RolPermiso rp10 = new RolPermiso();
-                rp10.setFechaAsignacion(fechaAsignacion);
                 rp10.setRol(superUsuario.get());
                 rp10.setPermiso(eliminarEspecialidad.get());
 
                 RolPermiso rp5 = new RolPermiso();
-                rp5.setFechaAsignacion(fechaAsignacion);
                 rp5.setRol(asegurado.get());
                 rp5.setPermiso(verEspecialidad.get());
 
                 RolPermiso rp6 = new RolPermiso();
-                rp6.setFechaAsignacion(fechaAsignacion);
                 rp6.setRol(medico.get());
                 rp6.setPermiso(verEspecialidad.get());
 

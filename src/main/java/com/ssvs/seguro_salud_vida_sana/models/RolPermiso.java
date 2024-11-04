@@ -19,9 +19,6 @@ public class RolPermiso {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "fechaAsignacion")
-  private LocalDate fechaAsignacion;
-
   @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
   @JoinColumn(name = "rol_id")
   @JsonIgnoreProperties("rolPermisos")
@@ -36,11 +33,6 @@ public class RolPermiso {
   public RolPermiso() {
   }
 
-  // Constructor con parametros
-  public RolPermiso(LocalDate fechaAsignacion) {
-    this.fechaAsignacion = fechaAsignacion;
-  }
-
   // Getters y Setters
   public Long getId() {
     return id;
@@ -48,14 +40,6 @@ public class RolPermiso {
   
   public void setId(Long id) {
     this.id = id;
-  }
-  
-  public LocalDate getFechaAsignacion() {
-    return fechaAsignacion;
-  }
-  
-  public void setFechaAsignacion(LocalDate fechaAsignacion) {
-    this.fechaAsignacion = fechaAsignacion;
   }
 
   public Rol getRol() {

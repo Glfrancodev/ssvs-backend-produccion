@@ -54,7 +54,6 @@ public class RolPermisoController {
     Optional<RolPermiso> rolPermisoOptional = rolPermisoService.getRolPermisoById(id);
     if(rolPermisoOptional.isPresent()){
       RolPermiso updatedRolPermiso = rolPermisoOptional.get();
-      updatedRolPermiso.setFechaAsignacion(rolPermiso.getFechaAsignacion());
       return ResponseEntity.ok(rolPermisoService.saveRolPermiso(updatedRolPermiso));
     }else{
       return ResponseEntity.notFound().build();
