@@ -11,7 +11,7 @@ import com.ssvs.seguro_salud_vida_sana.models.MedicoEspecialidad;
 import com.ssvs.seguro_salud_vida_sana.services.MedicoEspecialidadService;
 
 @RestController
-@RequestMapping("/api/medico_especialidad")
+@RequestMapping("/api/medico-especialidad")
 public class MedicoEspecialidadController {
 
     @Autowired
