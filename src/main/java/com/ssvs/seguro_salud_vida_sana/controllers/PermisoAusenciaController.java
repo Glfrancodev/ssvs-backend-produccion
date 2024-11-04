@@ -47,6 +47,7 @@ public class PermisoAusenciaController {
             permisoAusenciaActualizado.setEstado(permisoAusencia.getEstado());
             permisoAusenciaActualizado.setMedico(permisoAusencia.getMedico());
             return ResponseEntity.ok(permisoAusenciaService.savePermisoAusencia(permisoAusenciaActualizado));
+            
         } else {
             return ResponseEntity.notFound().build();
         }
