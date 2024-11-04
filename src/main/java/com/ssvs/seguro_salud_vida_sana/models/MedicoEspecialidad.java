@@ -28,7 +28,7 @@ public class MedicoEspecialidad {
     @JoinColumn(name = "especialidad_id")
     @JsonIgnoreProperties("medicoEspecialidades")
     private Especialidad especialidad;
-    // Constructor por defecto
+    // Constructor por defecto 
     public MedicoEspecialidad() {
     }
 
