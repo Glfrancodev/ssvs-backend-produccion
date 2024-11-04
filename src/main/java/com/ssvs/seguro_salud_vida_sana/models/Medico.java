@@ -1,13 +1,19 @@
 package com.ssvs.seguro_salud_vida_sana.models;
 
+import java.util.Set;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -28,6 +34,15 @@ public class Medico {
   @JsonIgnoreProperties({"medico","rol"})
   private Usuario usuario;
 
+  // Relacion Medico con PermisoAusencia 1 a n
+  @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Set<PermisoAusencia> permisoAusencias;
+
+  // Relacion Medico con MedicoEspecialidad 1 a n
+  @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Set<MedicoEspecialidad> medicoEspecialidades;
 
   // Constructor por defecto
   public Medico() {
@@ -60,4 +75,21 @@ public class Medico {
   public void setUsuario(Usuario usuario){
     this.usuario = usuario;
   }
+
+  public Set<PermisoAusencia> getPermisoAusencias() {
+    return permisoAusencias;
+  }
+
+  public void setPermisoAusencias(Set<PermisoAusencia> permisoAusencias) {
+    this.permisoAusencias = permisoAusencias;
+  }
+
+  public Set<MedicoEspecialidad> getMedicoEspecialidades() {
+    return medicoEspecialidades;
+  }
+
+  public void setMedicoEspecialidades(Set<MedicoEspecialidad> medicoEspecialidades) {
+    this.medicoEspecialidades = medicoEspecialidades;
+  }
+
 }
