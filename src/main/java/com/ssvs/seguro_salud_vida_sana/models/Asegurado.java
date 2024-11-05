@@ -1,16 +1,21 @@
 package com.ssvs.seguro_salud_vida_sana.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -35,6 +40,17 @@ public class Asegurado {
   @JoinColumn(name = "usuario_id")
   @JsonIgnoreProperties({"asegurado","rol"})
   private Usuario usuario;
+
+  // Relacion Asegurado con Cupo 1 a n
+  @OneToMany(mappedBy = "asegurado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Set<Cupo> cupos;
+
+  // Relacion Asegurado con HistoriaClinica 1 a 1
+  @OneToOne
+  @JoinColumn(name = "historia_clinica_id")
+  @JsonIgnoreProperties("asegurado")
+  private HistoriaClinica historiaClinica;
 
   // Constructor por defecto
   public Asegurado() {
@@ -85,6 +101,22 @@ public class Asegurado {
   }
   public void setUsuario(Usuario usuario){
     this.usuario = usuario;
+  }
+
+  public Set<Cupo> getCupos() {
+    return cupos;
+  }
+
+  public void setCupos(Set<Cupo> cupos) {
+    this.cupos = cupos;
+  }
+
+  public HistoriaClinica getHistoriaClinica(){
+    return historiaClinica;
+  }
+
+  public void setHistoriaClinica(HistoriaClinica historiaClinica){
+    this.historiaClinica = historiaClinica;
   }
 
 }
