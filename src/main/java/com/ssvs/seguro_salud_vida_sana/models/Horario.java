@@ -36,6 +36,9 @@ public class Horario {
     @Column(name = "hora_final")
     private LocalTime horaFinal;
 
+    @Column(name = "cantidad_cupos")
+    private int cantidadCupos;
+
     // Relacion Horario con MedicoEspecialidad n a 1
     @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
     @JoinColumn(name = "medico_especialidad_id")
@@ -87,6 +90,14 @@ public class Horario {
 
     public void setHoraFinal(LocalTime horaFinal) {
         this.horaFinal = horaFinal;
+    }
+
+    public int getCantidadCupos(){
+        return cantidadCupos;
+    }
+
+    public void setCantidadCupos(int cantidadCupos){
+        this.cantidadCupos = cantidadCupos;
     }
 
     public MedicoEspecialidad getMedicoEspecialidad() {

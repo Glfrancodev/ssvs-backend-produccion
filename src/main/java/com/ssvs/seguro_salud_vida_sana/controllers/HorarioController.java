@@ -33,7 +33,7 @@ public class HorarioController {
     // Crear un nuevo horario
     @PostMapping
     public Horario crearHorario(@RequestBody Horario horario) {
-        return horarioService.saveHorario(horario);
+        return horarioService.crearHorario(horario);
     }
 
     // Actualizar un horario

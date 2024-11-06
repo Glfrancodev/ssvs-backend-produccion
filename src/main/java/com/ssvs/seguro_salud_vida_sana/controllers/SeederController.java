@@ -73,11 +73,11 @@ public class SeederController{
         seedAsegurado();
         seedEspecialidad();
         seedMedicoEspecialidad();
-        seedHorario();
-        seedCupo();
-        seedConsulta();
-        seedTratamiento();
-        seedReceta();
+        // seedHorario();
+        // seedCupo();
+        // seedConsulta();
+        // seedTratamiento();
+        // seedReceta();
     }
 
     private void seedPermisos() {
@@ -402,20 +402,23 @@ public class SeederController{
             Optional<MedicoEspecialidad> medicoEspecialidad3 = medicoEspecialidadRepository.findById(3L);
             Horario h1 = new Horario();
             h1.setFecha(LocalDate.of(2024, 1, 15));
-            h1.setHoraInicio(LocalTime.of(9, 0));
-            h1.setHoraFinal(LocalTime.of(17, 0));
+            h1.setHoraInicio(LocalTime.of(8, 0));
+            h1.setHoraFinal(LocalTime.of(13, 0));
             h1.setMedicoEspecialidad(medicoEspecialidad1.get());
+            h1.setCantidadCupos(10);
     
             Horario h2 = new Horario();
             h2.setFecha(LocalDate.of(2024, 1, 16));
-            h2.setHoraInicio(LocalTime.of(10, 0));
-            h2.setHoraFinal(LocalTime.of(18, 0));
+            h2.setHoraInicio(LocalTime.of(8, 0));
+            h2.setHoraFinal(LocalTime.of(13, 0));
+            h1.setCantidadCupos(10);
             h2.setMedicoEspecialidad(medicoEspecialidad2.get());
     
             Horario h3 = new Horario();
             h3.setFecha(LocalDate.of(2024, 1, 17));
             h3.setHoraInicio(LocalTime.of(8, 0));
-            h3.setHoraFinal(LocalTime.of(16, 0));
+            h3.setHoraFinal(LocalTime.of(15, 0));
+            h1.setCantidadCupos(14);
             h3.setMedicoEspecialidad(medicoEspecialidad3.get());
     
             horarioRepository.saveAll(Arrays.asList(h1, h2, h3));
@@ -530,6 +533,4 @@ public class SeederController{
             }
         }
     }
-    
-    
 }
