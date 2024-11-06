@@ -1,6 +1,7 @@
 package com.ssvs.seguro_salud_vida_sana.models;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,23 +27,20 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "dia")
-    private String dia;
+    @Column(name = "fecha")
+    private LocalDate fecha;
 
     @Column(name = "hora_inicio")
-    private LocalDate horaInicio;
+    private LocalTime horaInicio;
 
     @Column(name = "hora_final")
-    private LocalDate horaFinal;
+    private LocalTime horaFinal;
 
-    @Column(name = "estado")
-    private boolean estado;
-
-    // Relacion Horario con Medico n a 1
+    // Relacion Horario con MedicoEspecialidad n a 1
     @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
-    @JoinColumn(name = "medico_id")
+    @JoinColumn(name = "medico_especialidad_id")
     @JsonIgnoreProperties("horarios")
-    private Medico medico;
+    private MedicoEspecialidad medicoEspecialidad;
     // Relacion Horario con Cupo 1 a n
     @OneToMany(mappedBy = "horario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
@@ -52,11 +50,10 @@ public class Horario {
     }
 
     // Constructor con parámetros
-    public Horario(String dia, LocalDate horaInicio, LocalDate horaFinal, boolean estado) {
-        this.dia = dia;
+    public Horario(LocalDate fecha, LocalTime horaInicio, LocalTime horaFinal) {
+        this.fecha = fecha;
         this.horaInicio = horaInicio;
         this.horaFinal = horaFinal;
-        this.estado = estado;
     }
 
     // Getters y Setters
@@ -68,44 +65,36 @@ public class Horario {
         this.id = id;
     }
 
-    public String getDia() {
-        return dia;
+    public LocalDate getFecha() {
+        return fecha;
     }
 
-    public void setDia(String dia) {
-        this.dia = dia;
+    public void setFecha(LocalDate fecha) {
+        this.fecha = fecha;
     }
 
-    public LocalDate getHoraInicio() {
+    public LocalTime getHoraInicio() {
         return horaInicio;
     }
 
-    public void setHoraInicio(LocalDate horaInicio) {
+    public void setHoraInicio(LocalTime horaInicio) {
         this.horaInicio = horaInicio;
     }
 
-    public LocalDate getHoraFinal() {
+    public LocalTime getHoraFinal() {
         return horaFinal;
     }
 
-    public void setHoraFinal(LocalDate horaFinal) {
+    public void setHoraFinal(LocalTime horaFinal) {
         this.horaFinal = horaFinal;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public MedicoEspecialidad getMedicoEspecialidad() {
+        return medicoEspecialidad;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
-
-    public Medico getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Medico medico) {
-        this.medico = medico;
+    public void setMedicoEspecialidad(MedicoEspecialidad medicoEspecialidad) {
+        this.medicoEspecialidad = medicoEspecialidad;
     }
 
     public Set<Cupo> getCupos() {

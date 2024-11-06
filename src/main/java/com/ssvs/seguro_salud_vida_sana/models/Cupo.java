@@ -9,7 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import java.time.LocalDate;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -24,22 +24,22 @@ public class Cupo {
     @Column(name = "numero")
     private int numero;
 
-    @Column(name = "fecha")
-    private LocalDate fecha;
+    @Column(name = "hora")
+    private LocalTime hora;
 
     @Column(name = "estado")
-    private String estado;
+    private String estado = "Libre";
 
     // Relacion Cupo con Horario n a 1
     @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
     @JoinColumn(name = "horario_id")
-    @JsonIgnoreProperties("cupos")
+    @JsonIgnoreProperties({"cupos","medicoEspecialidad"})
     private Horario horario;
 
     // Relacion Cupo con Asegurado n a 1
     @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
     @JoinColumn(name = "asegurado_id")
-    @JsonIgnoreProperties("cupos")
+    @JsonIgnoreProperties({"cupos","usuario"})
     private Asegurado asegurado;
 
     // Constructor por defecto
@@ -47,9 +47,9 @@ public class Cupo {
     }
 
     // Constructor con parámetros
-    public Cupo(int numero, LocalDate fecha, String estado) {
+    public Cupo(int numero, LocalTime hora, String estado) {
         this.numero = numero;
-        this.fecha = fecha;
+        this.hora = hora;
         this.estado = estado;
     }
 
@@ -70,15 +70,15 @@ public class Cupo {
         this.numero = numero;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
+    public LocalTime gethora() {
+        return hora;
     }
 
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
+    public void setHora(LocalTime hora) {
+        this.hora = hora;
     }
 
-    public String isEstado() {
+    public String getEstado() {
         return estado;
     }
 

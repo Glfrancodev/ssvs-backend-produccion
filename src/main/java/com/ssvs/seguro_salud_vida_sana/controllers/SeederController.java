@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import java.time.LocalTime;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
@@ -33,7 +33,22 @@ public class SeederController{
     private MedicoRepository medicoRepository;
 
     @Autowired
+    private HistoriaClinicaRepository historiaClinicaRepository;
+
+    @Autowired
     private AseguradoRepository aseguradoRepository;
+
+    @Autowired
+    private EspecialidadRepository especialidadRepository;
+
+    @Autowired
+    private MedicoEspecialidadRepository medicoEspecialidadRepository;
+
+    @Autowired
+    private HorarioRepository horarioRepository;
+
+    @Autowired
+    private CupoRepository cupoRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -45,7 +60,12 @@ public class SeederController{
         seedRolPermisos();
         seedUsuarios();
         seedMedico();
+        seedHistoriaClinica();
         seedAsegurado();
+        seedEspecialidad();
+        seedMedicoEspecialidad();
+        seedHorario();
+        seedCupo();
     }
 
     private void seedPermisos() {
@@ -265,11 +285,28 @@ public class SeederController{
         }
     }
     
+    private void seedHistoriaClinica() {
+        if (historiaClinicaRepository.count() == 0) {
+
+    
+                HistoriaClinica hc1 = new HistoriaClinica();
+    
+                HistoriaClinica hc2 = new HistoriaClinica();
+
+                HistoriaClinica hc3 = new HistoriaClinica();
+    
+                historiaClinicaRepository.saveAll(Arrays.asList(hc1, hc2, hc3));
+        }
+    }
+    
     private void seedAsegurado() {
         if (aseguradoRepository.count() == 0) {
             Optional<Usuario> usuario1 = usuarioRepository.findByCorreo("asegurado1@gmail.com");
             Optional<Usuario> usuario2 = usuarioRepository.findByCorreo("asegurado2@gmail.com");
             Optional<Usuario> usuario3 = usuarioRepository.findByCorreo("asegurado3@gmail.com");
+            Optional<HistoriaClinica> historiaclinica1 = historiaClinicaRepository.findById(1L);
+            Optional<HistoriaClinica> historiaclinica2 = historiaClinicaRepository.findById(2L);
+            Optional<HistoriaClinica> historiaclinica3 = historiaClinicaRepository.findById(3L);
     
             if (usuario1.isPresent() && usuario2.isPresent() && usuario3.isPresent()) {
                 Asegurado a1 = new Asegurado();
@@ -277,22 +314,136 @@ public class SeederController{
                 a1.setSexo('M');
                 a1.setFechaNacimiento(LocalDate.of(1990, 5, 20));
                 a1.setUsuario(usuario1.get());
+                a1.setHistoriaClinica(historiaclinica1.get());
     
                 Asegurado a2 = new Asegurado();
                 a2.setTipoSangre("A-");
                 a2.setSexo('F');
                 a2.setFechaNacimiento(LocalDate.of(1985, 8, 15));
                 a2.setUsuario(usuario2.get());
+                a2.setHistoriaClinica(historiaclinica2.get());
     
                 Asegurado a3 = new Asegurado();
                 a3.setTipoSangre("B+");
                 a3.setSexo('M');
                 a3.setFechaNacimiento(LocalDate.of(2000, 12, 5));
                 a3.setUsuario(usuario3.get());
+                a3.setHistoriaClinica(historiaclinica3.get());
     
                 aseguradoRepository.saveAll(Arrays.asList(a1, a2, a3));
             }
         }
-    }    
+    }
+    
+    private void seedEspecialidad() {
+        if (especialidadRepository.count() == 0) {
+            Especialidad e1 = new Especialidad();
+            e1.setNombre("Cardiología");
+            e1.setDescripcion("Especialidad en el tratamiento de enfermedades del corazón");
+    
+            Especialidad e2 = new Especialidad();
+            e2.setNombre("Neurología");
+            e2.setDescripcion("Especialidad en el tratamiento de enfermedades del sistema nervioso");
+    
+            Especialidad e3 = new Especialidad();
+            e3.setNombre("Pediatría");
+            e3.setDescripcion("Especialidad en el cuidado de la salud de los niños");
+    
+            especialidadRepository.saveAll(Arrays.asList(e1, e2, e3));
+        }
+    }
+
+    private void seedMedicoEspecialidad() {
+        if (medicoEspecialidadRepository.count() == 0) {
+            Optional<Medico> medico1 = medicoRepository.findById(1L);
+            Optional<Medico> medico2 = medicoRepository.findById(2L);
+            Optional<Medico> medico3 = medicoRepository.findById(3L);
+    
+            Optional<Especialidad> cardiologia = especialidadRepository.findByNombre("Cardiología");
+            Optional<Especialidad> neurologia = especialidadRepository.findByNombre("Neurología");
+            Optional<Especialidad> pediatria = especialidadRepository.findByNombre("Pediatría");
+    
+            if (medico1.isPresent() && medico2.isPresent() && medico3.isPresent() &&
+                cardiologia.isPresent() && neurologia.isPresent() && pediatria.isPresent()) {
+    
+                MedicoEspecialidad me1 = new MedicoEspecialidad();
+                me1.setMedico(medico1.get());
+                me1.setEspecialidad(cardiologia.get());
+    
+                MedicoEspecialidad me2 = new MedicoEspecialidad();
+                me2.setMedico(medico2.get());
+                me2.setEspecialidad(neurologia.get());
+    
+                MedicoEspecialidad me3 = new MedicoEspecialidad();
+                me3.setMedico(medico3.get());
+                me3.setEspecialidad(pediatria.get());
+    
+                medicoEspecialidadRepository.saveAll(Arrays.asList(me1, me2, me3));
+            }
+        }
+    }        
+
+    private void seedHorario() {
+        if (horarioRepository.count() == 0) {
+            Optional<MedicoEspecialidad> medicoEspecialidad1 = medicoEspecialidadRepository.findById(1L);
+            Optional<MedicoEspecialidad> medicoEspecialidad2 = medicoEspecialidadRepository.findById(2L);
+            Optional<MedicoEspecialidad> medicoEspecialidad3 = medicoEspecialidadRepository.findById(3L);
+            Horario h1 = new Horario();
+            h1.setFecha(LocalDate.of(2024, 1, 15));
+            h1.setHoraInicio(LocalTime.of(9, 0));
+            h1.setHoraFinal(LocalTime.of(17, 0));
+            h1.setMedicoEspecialidad(medicoEspecialidad1.get());
+    
+            Horario h2 = new Horario();
+            h2.setFecha(LocalDate.of(2024, 1, 16));
+            h2.setHoraInicio(LocalTime.of(10, 0));
+            h2.setHoraFinal(LocalTime.of(18, 0));
+            h2.setMedicoEspecialidad(medicoEspecialidad2.get());
+    
+            Horario h3 = new Horario();
+            h3.setFecha(LocalDate.of(2024, 1, 17));
+            h3.setHoraInicio(LocalTime.of(8, 0));
+            h3.setHoraFinal(LocalTime.of(16, 0));
+            h3.setMedicoEspecialidad(medicoEspecialidad3.get());
+    
+            horarioRepository.saveAll(Arrays.asList(h1, h2, h3));
+        }
+    }
+    
+    private void seedCupo() {
+        if (cupoRepository.count() == 0) {
+            Optional<Horario> horario1 = horarioRepository.findById(1L);
+            Optional<Horario> horario2 = horarioRepository.findById(2L);
+            Optional<Horario> horario3 = horarioRepository.findById(3L);
+    
+            Optional<Asegurado> asegurado1 = aseguradoRepository.findById(1L);
+            Optional<Asegurado> asegurado2 = aseguradoRepository.findById(2L);
+    
+            if (horario1.isPresent() && horario2.isPresent() && horario3.isPresent()) {
+                Cupo c1 = new Cupo();
+                c1.setNumero(1);
+                c1.setHora(LocalTime.of(9, 0));
+                c1.setEstado("Reservado");
+                c1.setHorario(horario1.get());
+                c1.setAsegurado(asegurado1.orElse(null));
+    
+                Cupo c2 = new Cupo();
+                c2.setNumero(2);
+                c2.setHora(LocalTime.of(10, 0));
+                c2.setEstado("Reservado");
+                c2.setHorario(horario2.get());
+                c2.setAsegurado(asegurado2.orElse(null));
+    
+                Cupo c3 = new Cupo();
+                c3.setNumero(3);
+                c2.setHora(LocalTime.of(8, 0));
+                c3.setEstado("Libre");
+                c3.setHorario(horario3.get());
+    
+                cupoRepository.saveAll(Arrays.asList(c1, c2, c3));
+            }
+        }
+    }
+    
 
 }

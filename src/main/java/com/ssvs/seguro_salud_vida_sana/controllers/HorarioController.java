@@ -42,11 +42,10 @@ public class HorarioController {
         Optional<Horario> horarioOptional = horarioService.getHorarioById(id);
         if (horarioOptional.isPresent()) {
             Horario horarioActualizado = horarioOptional.get();
-            horarioActualizado.setDia(horario.getDia());
+            horarioActualizado.setFecha(horario.getFecha());
             horarioActualizado.setHoraInicio(horario.getHoraInicio());
             horarioActualizado.setHoraFinal(horario.getHoraFinal());
-            horarioActualizado.setEstado(horario.isEstado());
-            horarioActualizado.setMedico(horario.getMedico());
+            horarioActualizado.setMedicoEspecialidad(horario.getMedicoEspecialidad());
             return ResponseEntity.ok(horarioService.saveHorario(horarioActualizado));
         } else {
             return ResponseEntity.notFound().build();

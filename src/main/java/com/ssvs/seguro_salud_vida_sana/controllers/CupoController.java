@@ -43,8 +43,7 @@ public class CupoController {
         if (cupoOptional.isPresent()) {
             Cupo cupoActualizado = cupoOptional.get();
             cupoActualizado.setNumero(cupo.getNumero());
-            cupoActualizado.setFecha(cupo.getFecha());
-            cupoActualizado.setEstado(cupo.isEstado());
+            cupoActualizado.setEstado(cupo.getEstado());
             cupoActualizado.setAsegurado(cupo.getAsegurado());
             cupoActualizado.setHorario(cupo.getHorario());
             return ResponseEntity.ok(cupoService.saveCupo(cupoActualizado));
