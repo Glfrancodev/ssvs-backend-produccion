@@ -51,6 +51,15 @@ public class SeederController{
     private CupoRepository cupoRepository;
 
     @Autowired
+    private ConsultaRepository consultaRepository;
+
+    @Autowired
+    private TratamientoRepository tratamientoRepository;
+
+    @Autowired
+    private RecetaRepository recetaRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping
@@ -66,6 +75,9 @@ public class SeederController{
         seedMedicoEspecialidad();
         seedHorario();
         seedCupo();
+        seedConsulta();
+        seedTratamiento();
+        seedReceta();
     }
 
     private void seedPermisos() {
@@ -436,7 +448,7 @@ public class SeederController{
     
                 Cupo c3 = new Cupo();
                 c3.setNumero(3);
-                c2.setHora(LocalTime.of(8, 0));
+                c3.setHora(LocalTime.of(8, 0));
                 c3.setEstado("Libre");
                 c3.setHorario(horario3.get());
     
@@ -444,6 +456,79 @@ public class SeederController{
             }
         }
     }
-    
 
+    private void seedConsulta() {
+        if (consultaRepository.count() == 0) {
+            Optional<Cupo> cupo1 = cupoRepository.findById(1L);
+            Optional<Cupo> cupo2 = cupoRepository.findById(2L);
+            Optional<HistoriaClinica> historia1 = historiaClinicaRepository.findById(1L);
+            Optional<HistoriaClinica> historia2 = historiaClinicaRepository.findById(2L);
+    
+            if (cupo1.isPresent() && cupo2.isPresent() && historia1.isPresent() && historia2.isPresent()) {
+                Consulta consulta1 = new Consulta();
+                consulta1.setFechaConsulta(LocalDate.of(2024, 3, 15));
+                consulta1.setMotivoConsulta("Revisión general");
+                consulta1.setDiagnostico("Buena salud");
+                consulta1.setNota("Sin observaciones adicionales");
+                consulta1.setCupo(cupo1.get());
+                consulta1.setHistoriaClinica(historia1.get());
+    
+                Consulta consulta2 = new Consulta();
+                consulta2.setFechaConsulta(LocalDate.of(2024, 4, 20));
+                consulta2.setMotivoConsulta("Dolor de cabeza");
+                consulta2.setDiagnostico("Migraña leve");
+                consulta2.setNota("Recomendar descanso y tratamiento adicional");
+                consulta2.setCupo(cupo2.get());
+                consulta2.setHistoriaClinica(historia2.get());
+    
+                consultaRepository.saveAll(Arrays.asList(consulta1, consulta2));
+            }
+        }
+    }
+    
+    private void seedTratamiento() {
+        if (tratamientoRepository.count() == 0) {
+            Optional<Consulta> consulta1 = consultaRepository.findById(1L);
+            Optional<Consulta> consulta2 = consultaRepository.findById(2L);
+    
+            if (consulta1.isPresent() && consulta2.isPresent()) {
+                Tratamiento tratamiento1 = new Tratamiento();
+                tratamiento1.setFecha(LocalDate.of(2024, 3, 15));
+                tratamiento1.setConsulta(consulta1.get());
+    
+                Tratamiento tratamiento2 = new Tratamiento();
+                tratamiento2.setFecha(LocalDate.of(2024, 4, 20));
+                tratamiento2.setConsulta(consulta2.get());
+    
+                tratamientoRepository.saveAll(Arrays.asList(tratamiento1, tratamiento2));
+            }
+        }
+    }
+    
+    private void seedReceta() {
+        if (recetaRepository.count() == 0) {
+            Optional<Tratamiento> tratamiento1 = tratamientoRepository.findById(1L);
+            Optional<Tratamiento> tratamiento2 = tratamientoRepository.findById(2L);
+    
+            if (tratamiento1.isPresent() && tratamiento2.isPresent()) {
+                Receta receta1 = new Receta();
+                receta1.setMedicamento("Paracetamol");
+                receta1.setFrecuencia("Cada 8 horas");
+                receta1.setFechaInicio(LocalDate.of(2024, 3, 16));
+                receta1.setFechaFinal(LocalDate.of(2024, 3, 22));
+                receta1.setTratamiento(tratamiento1.get());
+    
+                Receta receta2 = new Receta();
+                receta2.setMedicamento("Ibuprofeno");
+                receta2.setFrecuencia("Cada 12 horas");
+                receta2.setFechaInicio(LocalDate.of(2024, 4, 21));
+                receta2.setFechaFinal(LocalDate.of(2024, 4, 27));
+                receta2.setTratamiento(tratamiento2.get());
+    
+                recetaRepository.saveAll(Arrays.asList(receta1, receta2));
+            }
+        }
+    }
+    
+    
 }

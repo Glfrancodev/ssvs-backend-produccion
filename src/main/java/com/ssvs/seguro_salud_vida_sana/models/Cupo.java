@@ -2,15 +2,18 @@ package com.ssvs.seguro_salud_vida_sana.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -41,6 +44,11 @@ public class Cupo {
     @JoinColumn(name = "asegurado_id")
     @JsonIgnoreProperties({"cupos","usuario"})
     private Asegurado asegurado;
+
+    // Relacion Cupo con Consulta 1 a 1
+    @OneToOne(mappedBy = "cupo", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Consulta consulta;
 
     // Constructor por defecto
     public Cupo() {
@@ -100,5 +108,13 @@ public class Cupo {
 
     public void setAsegurado(Asegurado asegurado) {
         this.asegurado = asegurado;
+    }
+
+    public Consulta setConsulta(){
+        return consulta;
+    }
+    
+    public void setConsulta(Consulta consulta){
+        this.consulta= consulta;
     }
 }

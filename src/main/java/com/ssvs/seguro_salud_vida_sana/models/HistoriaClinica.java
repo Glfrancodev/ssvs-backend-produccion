@@ -1,12 +1,16 @@
 package com.ssvs.seguro_salud_vida_sana.models;
 
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -22,6 +26,11 @@ public class HistoriaClinica {
     @OneToOne(mappedBy = "historiaClinica", fetch = FetchType.LAZY)
     @JsonIgnore
     private Asegurado asegurado;
+
+    // Relacion HistoriaClinica con Consulta 1 a n
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Set<Consulta> consultas;
 
     // Constructor por defecto
     public HistoriaClinica() {
@@ -47,5 +56,13 @@ public class HistoriaClinica {
 
     public void setAsegurado(Asegurado asegurado){
         this.asegurado = asegurado;
+    }
+
+    public Set<Consulta> getConsultas() {
+        return consultas;
+    }
+    
+    public void setConsulta(Set<Consulta> consultas) {
+        this.consultas = consultas;
     }
 }
