@@ -11,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -26,6 +27,9 @@ public class Cupo {
 
     @Column(name = "numero")
     private int numero;
+
+    @Column(name = "fechaReservado")
+    private LocalDate fechaReservado;
 
     @Column(name = "hora")
     private LocalTime hora;
@@ -55,8 +59,9 @@ public class Cupo {
     }
 
     // Constructor con parámetros
-    public Cupo(int numero, LocalTime hora, String estado) {
+    public Cupo(int numero, LocalDate fechaReservado, LocalTime hora, String estado) {
         this.numero = numero;
+        this.fechaReservado = fechaReservado;
         this.hora = hora;
         this.estado = estado;
     }
@@ -76,6 +81,14 @@ public class Cupo {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public LocalDate getFechaReservado(){
+        return fechaReservado;
+    }
+
+    public void setFechaReservado(LocalDate fechaReservado){
+        this.fechaReservado = fechaReservado;
     }
 
     public LocalTime gethora() {

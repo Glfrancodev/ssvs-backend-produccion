@@ -434,24 +434,25 @@ public class SeederController{
             if (horario1.isPresent() && horario2.isPresent() && horario3.isPresent()) {
                 Cupo c1 = new Cupo();
                 c1.setNumero(1);
+                c1.setFechaReservado(LocalDate.now());
                 c1.setHora(LocalTime.of(9, 0));
                 c1.setEstado("Reservado");
                 c1.setHorario(horario1.get());
                 c1.setAsegurado(asegurado1.orElse(null));
     
                 Cupo c2 = new Cupo();
-                c2.setNumero(2);
+                c2.setNumero(1);
+                c2.setFechaReservado(LocalDate.now());
                 c2.setHora(LocalTime.of(10, 0));
                 c2.setEstado("Reservado");
                 c2.setHorario(horario2.get());
                 c2.setAsegurado(asegurado2.orElse(null));
     
                 Cupo c3 = new Cupo();
-                c3.setNumero(3);
+                c3.setNumero(1);
                 c3.setHora(LocalTime.of(8, 0));
                 c3.setEstado("Libre");
                 c3.setHorario(horario3.get());
-    
                 cupoRepository.saveAll(Arrays.asList(c1, c2, c3));
             }
         }
