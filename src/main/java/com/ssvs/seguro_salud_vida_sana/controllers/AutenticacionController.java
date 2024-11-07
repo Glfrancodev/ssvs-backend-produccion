@@ -21,7 +21,7 @@ public class AutenticacionController {
     private JwtUtil jwtUtil;
 
     @PostMapping("/authenticate")
-    // @CrossOrigin(origins = "https://stylo-store-git-master-gabriels-projects-9c5cda58.vercel.app")  // Añadir CORS para el dominio del frontend
+    @CrossOrigin(origins = "http://localhost:4200/login")  // Añadir CORS para el dominio del frontend
     public AuthenticationResponse createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) throws Exception {
         try {
             authenticationManager.authenticate(

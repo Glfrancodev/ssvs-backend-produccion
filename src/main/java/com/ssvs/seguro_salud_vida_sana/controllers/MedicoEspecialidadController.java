@@ -12,6 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.MedicoEspecialidadService;
 
 @RestController
 @RequestMapping("/api/medico-especialidad")
+@CrossOrigin(origins = "http://localhost:4200/login")
 public class MedicoEspecialidadController {
 
     @Autowired

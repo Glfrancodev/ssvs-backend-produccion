@@ -12,6 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.TratamientoService;
 
 @RestController
 @RequestMapping("/api/tratamiento")
+@CrossOrigin(origins = "http://localhost:4200/login")
 public class TratamientoController {
 
     @Autowired

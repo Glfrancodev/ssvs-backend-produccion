@@ -10,7 +10,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")  // Apply CORS to all endpoints
-                .allowedOrigins("https://stylo-store-git-master-gabriels-projects-9c5cda58.vercel.app")  // Allow your frontend's domain
+                .allowedOrigins("http://localhost:4200/")  // Allow your frontend's domain
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS")  // Allowed HTTP methods
                 .allowedHeaders("*")  // Allow all headers
                 .allowCredentials(true);  // Allow credentials (if needed)

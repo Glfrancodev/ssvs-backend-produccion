@@ -12,6 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.RecetaService;
 
 @RestController
 @RequestMapping("/api/receta")
+@CrossOrigin(origins = "http://localhost:4200/login")
 public class RecetaController {
 
     @Autowired
