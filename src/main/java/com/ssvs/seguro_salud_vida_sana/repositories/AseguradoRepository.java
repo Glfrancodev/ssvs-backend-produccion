@@ -7,5 +7,5 @@ import com.ssvs.seguro_salud_vida_sana.models.Asegurado;
 
 @Repository
 public interface AseguradoRepository extends JpaRepository<Asegurado, Long> {
- 
+    
 }

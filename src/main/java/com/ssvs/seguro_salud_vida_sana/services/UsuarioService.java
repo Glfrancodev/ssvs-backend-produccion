@@ -54,4 +54,10 @@ public class UsuarioService {
     public void deleteUsuario(Long id) {
         usuarioRepository.deleteById(id);
     }
+
+    // Obtener usuarios por rol
+    public List<Usuario> getUsuariosByRol(Long roleId) {
+        return usuarioRepository.findByRolId(roleId);
+    }
+
 }

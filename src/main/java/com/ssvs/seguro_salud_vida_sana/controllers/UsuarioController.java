@@ -98,4 +98,11 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Obtener usuarios por rol
+    @GetMapping("/rol/{roleId}")
+    public List<Usuario> obtenerUsuariosPorRol(@PathVariable Long roleId) {
+        return usuarioService.getUsuariosByRol(roleId);
+    }
+
 }
