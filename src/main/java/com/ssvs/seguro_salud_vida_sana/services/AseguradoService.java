@@ -7,16 +7,32 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssvs.seguro_salud_vida_sana.models.Asegurado;
+import com.ssvs.seguro_salud_vida_sana.models.HistoriaClinica;
 import com.ssvs.seguro_salud_vida_sana.repositories.AseguradoRepository;
+import com.ssvs.seguro_salud_vida_sana.repositories.HistoriaClinicaRepository;
 
 @Service
 public class AseguradoService {
 
     @Autowired
     private AseguradoRepository aseguradoRepository;
+    @Autowired
+    private HistoriaClinicaRepository historiaClinicaRepository;
 
     // Crear un nuevo asegurado
     public Asegurado saveAsegurado(Asegurado asegurado) {
+        return aseguradoRepository.save(asegurado);
+    }
+
+    public Asegurado createAsegurado(Asegurado asegurado) {
+        // Crear una nueva Historia Clínica
+        HistoriaClinica nuevaHistoriaClinica = new HistoriaClinica();
+        nuevaHistoriaClinica = historiaClinicaRepository.save(nuevaHistoriaClinica);
+
+        // Asignar la Historia Clínica al Asegurado
+        asegurado.setHistoriaClinica(nuevaHistoriaClinica);
+
+        // Guardar el Asegurado con la Historia Clínica vinculada
         return aseguradoRepository.save(asegurado);
     }
 

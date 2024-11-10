@@ -105,7 +105,7 @@ public class Usuario {
     this.apellido = apellido;
   }
 
-  public boolean isEstaActivo(){
+  public boolean getEstaActivo(){
     return estaActivo;
   }
   

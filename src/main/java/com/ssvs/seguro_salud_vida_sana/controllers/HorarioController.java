@@ -63,4 +63,11 @@ public class HorarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/medico-especialidad/{medicoEspecialidadId}")
+    public ResponseEntity<List<Horario>> getHorariosByMedicoEspecialidad(@PathVariable Long medicoEspecialidadId) {
+        List<Horario> horarios = horarioService.findHorariosByMedicoEspecialidadId(medicoEspecialidadId);
+        return ResponseEntity.ok(horarios);
+    }
+
 }

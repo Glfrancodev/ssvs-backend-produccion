@@ -70,8 +70,8 @@ public class SeederController{
         seedRolPermisos();
         seedUsuarios();
         seedMedico();
-        seedHistoriaClinica();
-        seedAsegurado();
+        // seedHistoriaClinica();
+        // seedAsegurado();
         seedEspecialidad();
         seedMedicoEspecialidad();
         // seedHorario();

@@ -43,6 +43,8 @@ public class CupoController {
         if (cupoOptional.isPresent()) {
             Cupo cupoActualizado = cupoOptional.get();
             cupoActualizado.setNumero(cupo.getNumero());
+            cupoActualizado.setHora(cupo.gethora());
+            cupoActualizado.setFechaReservado(cupo.getFechaReservado());
             cupoActualizado.setEstado(cupo.getEstado());
             cupoActualizado.setAsegurado(cupo.getAsegurado());
             cupoActualizado.setHorario(cupo.getHorario());
@@ -63,4 +65,10 @@ public class CupoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/horario/{horarioId}")
+    public List<Cupo> getCuposByHorario(@PathVariable Long horarioId) {
+        return cupoService.findCuposByHorarioId(horarioId);
+    }
+
 }

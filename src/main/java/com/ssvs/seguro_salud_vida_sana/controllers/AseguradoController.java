@@ -40,7 +40,7 @@ public class AseguradoController {
     // Crear un nuevo asegurado
     @PostMapping
     public Asegurado crearAsegurado(@RequestBody Asegurado asegurado) {
-        return aseguradoService.saveAsegurado(asegurado);
+        return aseguradoService.createAsegurado(asegurado);
     }
 
     // Actualizar asegurado

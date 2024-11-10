@@ -63,4 +63,16 @@ public class MedicoEspecialidadController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/especialidad/{especialidadId}/medico/{medicoId}")
+    public ResponseEntity<MedicoEspecialidad> getMedicoEspecialidadByEspecialidadAndMedico(
+            @PathVariable Long especialidadId,
+            @PathVariable Long medicoId) {
+        MedicoEspecialidad medicoEspecialidad = medicoEspecialidadService
+                .findByEspecialidadAndMedico(especialidadId, medicoId);
+        return medicoEspecialidad != null 
+                ? ResponseEntity.ok(medicoEspecialidad) 
+                : ResponseEntity.notFound().build();
+    }
+
 }

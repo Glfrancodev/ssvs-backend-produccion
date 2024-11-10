@@ -34,4 +34,13 @@ public class MedicoEspecialidadService {
     public void deleteMedicoEspecialidad(Long id) {
         medicoEspecialidadRepository.deleteById(id);
     }
+
+    public MedicoEspecialidadService(MedicoEspecialidadRepository medicoEspecialidadRepository) {
+        this.medicoEspecialidadRepository = medicoEspecialidadRepository;
+    }
+
+    public MedicoEspecialidad findByEspecialidadAndMedico(Long especialidadId, Long medicoId) {
+        return medicoEspecialidadRepository.findByEspecialidadIdAndMedicoId(especialidadId, medicoId);
+    }
+
 }

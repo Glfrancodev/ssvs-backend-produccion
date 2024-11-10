@@ -34,4 +34,9 @@ public class CupoService {
     public void deleteCupo(Long id) {
         cupoRepository.deleteById(id);
     }
+
+    public List<Cupo> findCuposByHorarioId(Long horarioId) {
+        return cupoRepository.findByHorarioId(horarioId);
+    }
+
 }

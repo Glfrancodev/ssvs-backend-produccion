@@ -79,4 +79,9 @@ public class HorarioService {
     public void deleteHorario(Long id) {
         horarioRepository.deleteById(id);
     }
+
+    public List<Horario> findHorariosByMedicoEspecialidadId(Long medicoEspecialidadId) {
+        return horarioRepository.findByMedicoEspecialidadId(medicoEspecialidadId);
+    }
+
 }

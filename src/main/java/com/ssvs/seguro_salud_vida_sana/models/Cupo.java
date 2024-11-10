@@ -46,7 +46,7 @@ public class Cupo {
     // Relacion Cupo con Asegurado n a 1
     @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
     @JoinColumn(name = "asegurado_id")
-    @JsonIgnoreProperties({"cupos","usuario"})
+    @JsonIgnoreProperties({"cupos"})
     private Asegurado asegurado;
 
     // Relacion Cupo con Consulta 1 a 1

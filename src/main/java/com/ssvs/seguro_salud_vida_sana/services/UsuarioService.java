@@ -25,6 +25,11 @@ public class UsuarioService {
         return usuarioRepository.save(usuario);
     }
 
+    // Crear un nuevo usuario con la contraseña encriptada
+    public Usuario updateUsuario(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
     // Obtener todos los usuarios
     public List<Usuario> getUsuarios() {
         return usuarioRepository.findAll();
@@ -45,7 +50,7 @@ public class UsuarioService {
       if (UsuarioOptional.isPresent()) {
           Usuario usuario = UsuarioOptional.get();
           // Negar el estado actual de 'esta_activo'
-          usuario.setEstaActivo(!usuario.isEstaActivo());
+          usuario.setEstaActivo(!usuario.getEstaActivo());
           usuarioRepository.save(usuario);  // Guardar los cambios
       }
     }
@@ -58,6 +63,14 @@ public class UsuarioService {
     // Obtener usuarios por rol
     public List<Usuario> getUsuariosByRol(Long roleId) {
         return usuarioRepository.findByRolId(roleId);
+    }
+
+    public List<Usuario> getUsuariosSinMedicoByRol(Long roleId) {
+        return usuarioRepository.findUsuariosSinMedicoByRol(roleId);
+    }
+
+    public List<Usuario> getUsuariosSinAseguradoByRol(Long roleId) {
+        return usuarioRepository.findUsuariosSinAseguradoByRol(roleId);
     }
 
 }

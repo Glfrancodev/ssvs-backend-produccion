@@ -26,7 +26,7 @@ public class UsuarioDetailsService implements UserDetailsService {
             new UsernameNotFoundException("Usuario no encontrado con correo: " + correo)
         );
  
-        if (!usuario.isEstaActivo()) {
+        if (!usuario.getEstaActivo()) {
             throw new DisabledException("El usuario no está activo");
         }
 

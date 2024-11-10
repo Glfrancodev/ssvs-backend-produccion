@@ -74,7 +74,9 @@ public class UsuarioController {
           usuarioActualizado.setApellido(usuario.getApellido());
           usuarioActualizado.setCorreo(usuario.getCorreo());
           usuarioActualizado.setRol(usuario.getRol());
-          return ResponseEntity.ok(usuarioService.saveUsuario(usuarioActualizado));
+          usuarioActualizado.setEstaActivo(usuario.getEstaActivo());
+          usuarioActualizado.setRol(usuario.getRol());
+          return ResponseEntity.ok(usuarioService.updateUsuario(usuarioActualizado));
         } else {
           return ResponseEntity.notFound().build();
         }
@@ -103,6 +105,17 @@ public class UsuarioController {
     @GetMapping("/rol/{roleId}")
     public List<Usuario> obtenerUsuariosPorRol(@PathVariable Long roleId) {
         return usuarioService.getUsuariosByRol(roleId);
+    }
+
+    @GetMapping("/rol/{roleId}/sin-medico")
+    public List<Usuario> obtenerUsuariosSinMedico(@PathVariable Long roleId) {
+        return usuarioService.getUsuariosSinMedicoByRol(roleId);
+    }
+
+    @GetMapping("/rol/{roleId}/sin-asegurado")
+    public ResponseEntity<List<Usuario>> obtenerUsuariosSinAsegurado(@PathVariable Long roleId) {
+        List<Usuario> usuarios = usuarioService.getUsuariosSinAseguradoByRol(roleId);
+        return ResponseEntity.ok(usuarios);
     }
 
 }

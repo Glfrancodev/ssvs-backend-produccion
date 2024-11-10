@@ -8,4 +8,7 @@ import com.ssvs.seguro_salud_vida_sana.models.MedicoEspecialidad;
 @Repository
 public interface MedicoEspecialidadRepository extends JpaRepository<MedicoEspecialidad, Long> {
     // Puedes agregar métodos de búsqueda personalizados si es necesario
+
+    MedicoEspecialidad findByEspecialidadIdAndMedicoId(Long especialidadId, Long medicoId);
+
 }
