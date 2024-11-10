@@ -63,4 +63,11 @@ public class ConsultaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Obtener todas las consultas por historia clínica ID
+    @GetMapping("/historia/{historiaClinicaId}")
+    public List<Consulta> getConsultasByHistoriaClinicaId(@PathVariable Long historiaClinicaId) {
+        return consultaService.findConsultasByHistoriaClinicaId(historiaClinicaId);
+    }
+    
 }

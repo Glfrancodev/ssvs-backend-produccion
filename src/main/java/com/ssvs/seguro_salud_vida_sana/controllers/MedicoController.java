@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssvs.seguro_salud_vida_sana.models.Especialidad;
 import com.ssvs.seguro_salud_vida_sana.models.Medico;
+import com.ssvs.seguro_salud_vida_sana.models.MedicoEspecialidad;
 import com.ssvs.seguro_salud_vida_sana.services.MedicoService;
 
 @RestController
@@ -68,4 +70,17 @@ public class MedicoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Obtener especialidades por correo del médico
+    @GetMapping("/especialidades/{correo}")
+    public List<Especialidad> obtenerEspecialidadesPorCorreo(@PathVariable String correo) {
+        return medicoService.obtenerEspecialidadesPorCorreo(correo);
+    }
+
+    // Obtener médico por correo
+    @GetMapping("/correo/{correo}")
+    public Medico obtenerMedicoPorCorreo(@PathVariable String correo) {
+        return medicoService.obtenerMedicoPorCorreo(correo);
+    }
+
 }

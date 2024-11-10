@@ -34,4 +34,9 @@ public class ConsultaService {
     public void deleteConsulta(Long id) {
         consultaRepository.deleteById(id);
     }
+
+    public List<Consulta> findConsultasByHistoriaClinicaId(Long historiaClinicaId) {
+        return consultaRepository.findByHistoriaClinicaId(historiaClinicaId);
+    }
+
 }

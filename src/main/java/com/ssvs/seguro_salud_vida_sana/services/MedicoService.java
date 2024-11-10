@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssvs.seguro_salud_vida_sana.models.Especialidad;
 import com.ssvs.seguro_salud_vida_sana.models.Medico;
 import com.ssvs.seguro_salud_vida_sana.repositories.MedicoRepository;
 
@@ -30,13 +31,20 @@ public class MedicoService {
         return medicoRepository.findById(id);
     }
 
-    // Buscar medico por item
-    public Optional<Medico> obtenerMedicoPorItem(String item) {
-        return medicoRepository.findByItem(item);
-    }
-
     // Eliminar medico
     public void deleteMedico(Long id) {
         medicoRepository.deleteById(id);
     }
+
+    // Obtener especialidades por correo del médico
+    public List<Especialidad> obtenerEspecialidadesPorCorreo(String correo) {
+        return medicoRepository.findEspecialidadesByCorreo(correo);
+    }
+
+    // Obtener médico por correo
+    public Medico obtenerMedicoPorCorreo(String correo) {
+        Optional<Medico> medico = medicoRepository.findByUsuarioCorreo(correo);
+        return medico.orElse(null);
+    }
+
 }
