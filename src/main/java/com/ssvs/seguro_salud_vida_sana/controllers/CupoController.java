@@ -36,24 +36,6 @@ public class CupoController {
         return cupoService.saveCupo(cupo);
     }
 
-    // Actualizar un cupo
-    @PutMapping("/{id}")
-    public ResponseEntity<Cupo> actualizarCupo(@PathVariable Long id, @RequestBody Cupo cupo) {
-        Optional<Cupo> cupoOptional = cupoService.getCupoById(id);
-        if (cupoOptional.isPresent()) {
-            Cupo cupoActualizado = cupoOptional.get();
-            cupoActualizado.setNumero(cupo.getNumero());
-            cupoActualizado.setHora(cupo.gethora());
-            cupoActualizado.setFechaReservado(cupo.getFechaReservado());
-            cupoActualizado.setEstado(cupo.getEstado());
-            cupoActualizado.setAsegurado(cupo.getAsegurado());
-            cupoActualizado.setHorario(cupo.getHorario());
-            return ResponseEntity.ok(cupoService.saveCupo(cupoActualizado));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
     // Eliminar un cupo por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarCupo(@PathVariable Long id) {
@@ -84,6 +66,25 @@ public class CupoController {
             Cupo cupo = cupoOptional.get();
             cupo.setEstado(estado);
             Cupo cupoActualizado = cupoService.saveCupo(cupo);
+            return ResponseEntity.ok(cupoActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/reservar/{id}")
+    public ResponseEntity<Cupo> reservarCupo(@PathVariable Long id, @RequestBody Cupo cupo) {
+        Optional<Cupo> cupoOptional = cupoService.getCupoById(id);
+        if (cupoOptional.isPresent()) {
+            Cupo cupoExistente = cupoOptional.get();
+            
+            // Actualizar solo los campos necesarios
+            cupoExistente.setFechaReservado(cupo.getFechaReservado());
+            cupoExistente.setEstado(cupo.getEstado());
+            cupoExistente.setAsegurado(cupo.getAsegurado());
+            
+            // Guardar el cupo actualizado
+            Cupo cupoActualizado = cupoService.saveCupo(cupoExistente);
             return ResponseEntity.ok(cupoActualizado);
         } else {
             return ResponseEntity.notFound().build();
