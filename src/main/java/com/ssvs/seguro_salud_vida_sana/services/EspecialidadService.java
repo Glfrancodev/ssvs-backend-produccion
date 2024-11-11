@@ -30,7 +30,7 @@ public class EspecialidadService {
         return especialidadRepository.findById(id);
     }
 
-    // Buscar especialidad por nombre
+    // Obtener especialidad por nombre
     public Optional<Especialidad> getEspecialidadByNombre(String nombre) {
         return especialidadRepository.findByNombre(nombre);
     }

@@ -39,4 +39,9 @@ public class CupoService {
         return cupoRepository.findByHorarioId(horarioId);
     }
 
+    // Obtener cupos ocupados por horario ID
+    public List<Cupo> findCuposOcupadosByHorarioId(Long horarioId) {
+        return cupoRepository.findByHorarioIdAndEstado(horarioId, "Ocupado");
+    }
+
 }

@@ -71,4 +71,10 @@ public class CupoController {
         return cupoService.findCuposByHorarioId(horarioId);
     }
 
+    // Obtener cupos ocupados por horario ID
+    @GetMapping("/horario/{horarioId}/ocupado")
+    public List<Cupo> getCuposOcupadosPorHorario(@PathVariable Long horarioId) {
+        return cupoService.findCuposOcupadosByHorarioId(horarioId);
+    }
+
 }

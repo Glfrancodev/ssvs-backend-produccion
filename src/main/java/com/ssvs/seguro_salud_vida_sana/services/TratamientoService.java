@@ -34,4 +34,10 @@ public class TratamientoService {
     public void deleteTratamiento(Long id) {
         tratamientoRepository.deleteById(id);
     }
+
+    // Método para encontrar un tratamiento por el ID de consulta
+    public Optional<Tratamiento> getTratamientoByConsultaId(Long consultaId) {
+        return tratamientoRepository.findByConsultaId(consultaId);
+    }
+
 }

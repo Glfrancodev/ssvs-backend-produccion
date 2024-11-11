@@ -61,4 +61,11 @@ public class TratamientoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/consulta/{consultaId}")
+    public ResponseEntity<Tratamiento> getTratamientoByConsultaId(@PathVariable Long consultaId) {
+        Optional<Tratamiento> tratamiento = tratamientoService.getTratamientoByConsultaId(consultaId);
+        return tratamiento.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

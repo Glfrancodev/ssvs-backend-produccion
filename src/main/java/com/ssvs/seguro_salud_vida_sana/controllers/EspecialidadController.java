@@ -61,4 +61,11 @@ public class EspecialidadController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // Obtener especialidad por nombre
+    @GetMapping("/nombre/{nombre}")
+    public Optional<Especialidad> obtenerEspecialidadPorNombre(@PathVariable String nombre) {
+        return especialidadService.getEspecialidadByNombre(nombre);
+    }
+
 }
