@@ -25,7 +25,7 @@ import org.springframework.security.core.Authentication;
 
 @RestController
 @RequestMapping("/api/usuario")
-@CrossOrigin(origins = "http://localhost:4200/login")
+@CrossOrigin(origins = "https://ssvs-frontend-produccion-production.up.railway.app")
 public class UsuarioController {
 
     @Autowired

@@ -12,6 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.HistoriaClinicaService;
 
 @RestController
 @RequestMapping("/api/historia_clinica")
+@CrossOrigin(origins = "https://ssvs-frontend-produccion-production.up.railway.app")
 public class HistoriaClinicaController {
 
     @Autowired

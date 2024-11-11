@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssvs.seguro_salud_vida_sana.models.Especialidad;
 import com.ssvs.seguro_salud_vida_sana.models.Medico;
-import com.ssvs.seguro_salud_vida_sana.models.MedicoEspecialidad;
 import com.ssvs.seguro_salud_vida_sana.services.MedicoService;
 
 @RestController
 @RequestMapping("/api/medico")
+@CrossOrigin(origins = "https://ssvs-frontend-produccion-production.up.railway.app")
 public class MedicoController {
 
     @Autowired
