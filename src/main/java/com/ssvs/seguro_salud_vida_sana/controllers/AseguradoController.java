@@ -70,4 +70,10 @@ public class AseguradoController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/correo/{correo}")
+    public Asegurado obtenerAseguradoPorCorreo(@PathVariable String correo) {
+        return aseguradoService.obtenerAseguradoPorCorreo(correo);
+    }
+
 }

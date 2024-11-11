@@ -11,6 +11,8 @@ import com.ssvs.seguro_salud_vida_sana.models.HistoriaClinica;
 import com.ssvs.seguro_salud_vida_sana.repositories.AseguradoRepository;
 import com.ssvs.seguro_salud_vida_sana.repositories.HistoriaClinicaRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class AseguradoService {
 
@@ -51,4 +53,10 @@ public class AseguradoService {
     public void deleteAsegurado(Long id) {
         aseguradoRepository.deleteById(id);
     }
+
+    public Asegurado obtenerAseguradoPorCorreo(String correo) {
+        return aseguradoRepository.findByUsuarioCorreo(correo)
+                .orElseThrow(() -> new EntityNotFoundException("Asegurado no encontrado con el correo: " + correo));
+    }
+
 }
