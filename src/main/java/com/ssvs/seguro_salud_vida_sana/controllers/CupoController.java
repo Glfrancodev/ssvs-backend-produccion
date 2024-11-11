@@ -91,4 +91,10 @@ public class CupoController {
         }
     }
 
+    @GetMapping("/asegurado/{aseguradoId}")
+    public ResponseEntity<List<Cupo>> obtenerCuposPorAsegurado(@PathVariable Long aseguradoId) {
+        List<Cupo> cupos = cupoService.obtenerCuposPorAsegurado(aseguradoId);
+        return ResponseEntity.ok(cupos);
+    }
+
 }

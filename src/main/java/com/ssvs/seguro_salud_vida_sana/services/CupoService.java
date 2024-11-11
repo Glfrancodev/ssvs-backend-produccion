@@ -44,4 +44,8 @@ public class CupoService {
         return cupoRepository.findByHorarioIdAndEstado(horarioId, "Ocupado");
     }
 
+    public List<Cupo> obtenerCuposPorAsegurado(Long aseguradoId) {
+        return cupoRepository.findByAseguradoId(aseguradoId);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.ssvs.seguro_salud_vida_sana.services;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
@@ -82,6 +83,14 @@ public class HorarioService {
 
     public List<Horario> findHorariosByMedicoEspecialidadId(Long medicoEspecialidadId) {
         return horarioRepository.findByMedicoEspecialidadId(medicoEspecialidadId);
+    }
+
+    public List<Horario> obtenerHorariosPorMedicoYFecha(Long medicoId, LocalDate fecha) {
+        return horarioRepository.findHorariosByMedicoAndFechaAfter(medicoId, fecha);
+    }
+
+    public List<Horario> guardarHorarios(List<Horario> horarios) {
+        return horarioRepository.saveAll(horarios);
     }
 
 }

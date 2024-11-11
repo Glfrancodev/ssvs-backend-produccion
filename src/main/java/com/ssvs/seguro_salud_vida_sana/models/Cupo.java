@@ -40,7 +40,7 @@ public class Cupo {
     // Relacion Cupo con Horario n a 1
     @ManyToOne()  // O CascadeType.REMOVE si solo quieres eliminar la relación
     @JoinColumn(name = "horario_id")
-    @JsonIgnoreProperties({"cupos","medicoEspecialidad"})
+    @JsonIgnoreProperties({"cupos"})
     private Horario horario;
 
     // Relacion Cupo con Asegurado n a 1
