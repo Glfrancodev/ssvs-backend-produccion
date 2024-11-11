@@ -77,4 +77,17 @@ public class CupoController {
         return cupoService.findCuposOcupadosByHorarioId(horarioId);
     }
 
+    @PutMapping("/estado/{id}")
+    public ResponseEntity<Cupo> actualizarEstadoCupo(@PathVariable Long id, @RequestBody String estado) {
+        Optional<Cupo> cupoOptional = cupoService.getCupoById(id);
+        if (cupoOptional.isPresent()) {
+            Cupo cupo = cupoOptional.get();
+            cupo.setEstado(estado);
+            Cupo cupoActualizado = cupoService.saveCupo(cupo);
+            return ResponseEntity.ok(cupoActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }

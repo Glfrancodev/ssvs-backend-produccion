@@ -34,4 +34,9 @@ public class RecetaService {
     public void deleteReceta(Long id) {
         recetaRepository.deleteById(id);
     }
+
+    public List<Receta> getRecetasByTratamientoId(Long tratamientoId) {
+        return recetaRepository.findByTratamientoId(tratamientoId);
+    }
+
 }

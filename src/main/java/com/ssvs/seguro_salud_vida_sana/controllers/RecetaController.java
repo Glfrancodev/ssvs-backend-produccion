@@ -63,4 +63,10 @@ public class RecetaController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @GetMapping("/tratamiento/{tratamientoId}")
+    public List<Receta> getRecetasByTratamientoId(@PathVariable Long tratamientoId) {
+        return recetaService.getRecetasByTratamientoId(tratamientoId);
+    }
+
 }
