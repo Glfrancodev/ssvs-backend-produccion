@@ -12,7 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.ConsultaService;
 
 @RestController
 @RequestMapping("/api/consulta")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class ConsultaController {
 
     @Autowired

@@ -15,7 +15,7 @@ import com.ssvs.seguro_salud_vida_sana.services.PermisoAusenciaService;
 
 @RestController
 @RequestMapping("/api/permiso-ausencia")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class PermisoAusenciaController {
 
     @Autowired

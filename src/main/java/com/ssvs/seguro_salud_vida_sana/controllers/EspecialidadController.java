@@ -12,7 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.EspecialidadService;
 
 @RestController
 @RequestMapping("/api/especialidad")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class EspecialidadController {
 
     @Autowired

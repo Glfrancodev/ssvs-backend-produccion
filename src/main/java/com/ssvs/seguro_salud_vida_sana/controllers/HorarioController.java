@@ -12,7 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.HorarioService;
 
 @RestController
 @RequestMapping("/api/horario")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class HorarioController {
 
     @Autowired

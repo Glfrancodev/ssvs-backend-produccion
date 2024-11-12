@@ -12,7 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.HistoriaClinicaService;
 
 @RestController
 @RequestMapping("/api/historia_clinica")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class HistoriaClinicaController {
 
     @Autowired

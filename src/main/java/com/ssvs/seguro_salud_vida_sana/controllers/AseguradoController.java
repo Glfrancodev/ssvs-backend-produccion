@@ -20,7 +20,7 @@ import com.ssvs.seguro_salud_vida_sana.services.AseguradoService;
 
 @RestController
 @RequestMapping("/api/asegurado")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class AseguradoController {
 
     @Autowired

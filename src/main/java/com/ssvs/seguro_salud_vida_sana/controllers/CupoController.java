@@ -12,7 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.CupoService;
 
 @RestController
 @RequestMapping("/api/cupo")
-@CrossOrigin(origins = "*")
+// @CrossOrigin(origins = "*")
 public class CupoController {
 
     @Autowired
