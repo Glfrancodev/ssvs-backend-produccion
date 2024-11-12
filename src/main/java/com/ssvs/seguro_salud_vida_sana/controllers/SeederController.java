@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/seeder")
-@CrossOrigin(origins = "https://ssvs-frontend-produccion-production.up.railway.app")
+@CrossOrigin(origins = "*")
 public class SeederController{
 
     @Autowired

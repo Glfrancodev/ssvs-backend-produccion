@@ -12,7 +12,7 @@ import com.ssvs.seguro_salud_vida_sana.services.TratamientoService;
 
 @RestController
 @RequestMapping("/api/tratamiento")
-@CrossOrigin(origins = "https://ssvs-frontend-produccion-production.up.railway.app")
+@CrossOrigin(origins = "*")
 public class TratamientoController {
 
     @Autowired

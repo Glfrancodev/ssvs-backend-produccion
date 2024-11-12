@@ -21,7 +21,7 @@ import com.ssvs.seguro_salud_vida_sana.services.MedicoService;
 
 @RestController
 @RequestMapping("/api/medico")
-@CrossOrigin(origins = "https://ssvs-frontend-produccion-production.up.railway.app")
+@CrossOrigin(origins = "*")
 public class MedicoController {
 
     @Autowired
