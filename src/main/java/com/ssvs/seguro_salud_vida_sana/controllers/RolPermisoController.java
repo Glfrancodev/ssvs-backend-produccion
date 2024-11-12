@@ -20,7 +20,7 @@ import com.ssvs.seguro_salud_vida_sana.services.RolPermisoService;;
 
 @RestController
 @RequestMapping("/api/rol-permiso")
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class RolPermisoController {
   @Autowired
   private RolPermisoService rolPermisoService;

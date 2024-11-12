@@ -21,7 +21,7 @@ import com.ssvs.seguro_salud_vida_sana.services.RolService;
 
 @RestController
 @RequestMapping("/api/rol")
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = "*")
 public class RolController {
   @Autowired
   private RolService rolService;
