@@ -1,5 +1,6 @@
 package com.ssvs.seguro_salud_vida_sana.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,5 +48,10 @@ public class CupoService {
     public List<Cupo> obtenerCuposPorAsegurado(Long aseguradoId) {
         return cupoRepository.findByAseguradoId(aseguradoId);
     }
+
+    public boolean existeCupoParaFechaActual(Long aseguradoId, LocalDate fecha) {
+        return cupoRepository.existsByAseguradoIdAndFechaReservado(aseguradoId, fecha);
+    }
+
 
 }

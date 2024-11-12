@@ -1,9 +1,11 @@
 package com.ssvs.seguro_salud_vida_sana.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,6 +80,13 @@ public class CupoController {
         Optional<Cupo> cupoOptional = cupoService.getCupoById(id);
         if (cupoOptional.isPresent()) {
             Cupo cupoExistente = cupoOptional.get();
+            Long aseguradoId = cupo.getAsegurado().getId();
+            LocalDate fechaActual = LocalDate.now();
+            
+            // Verificar si el asegurado ya tiene un cupo reservado para hoy
+            if (cupoService.existeCupoParaFechaActual(aseguradoId, fechaActual)) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            }
             
             // Actualizar solo los campos necesarios
             cupoExistente.setFechaReservado(cupo.getFechaReservado());
@@ -91,6 +100,7 @@ public class CupoController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @GetMapping("/asegurado/{aseguradoId}")
     public ResponseEntity<List<Cupo>> obtenerCuposPorAsegurado(@PathVariable Long aseguradoId) {

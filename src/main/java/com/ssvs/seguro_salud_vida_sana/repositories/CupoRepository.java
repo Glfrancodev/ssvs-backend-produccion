@@ -1,5 +1,6 @@
 package com.ssvs.seguro_salud_vida_sana.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,5 @@ public interface CupoRepository extends JpaRepository<Cupo, Long> {
     List<Cupo> findByHorarioId(Long horarioId);
     List<Cupo> findByHorarioIdAndEstado(Long horarioId, String estado);
     List<Cupo> findByAseguradoId(Long aseguradoId);
+    boolean existsByAseguradoIdAndFechaReservado(Long aseguradoId, LocalDate fechaReservado);
 }
