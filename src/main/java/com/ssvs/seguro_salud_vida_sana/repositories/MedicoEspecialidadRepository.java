@@ -1,5 +1,7 @@
 package com.ssvs.seguro_salud_vida_sana.repositories;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +12,5 @@ public interface MedicoEspecialidadRepository extends JpaRepository<MedicoEspeci
     // Puedes agregar métodos de búsqueda personalizados si es necesario
 
     MedicoEspecialidad findByEspecialidadIdAndMedicoId(Long especialidadId, Long medicoId);
-
+    List<MedicoEspecialidad> findByEspecialidadId(Long especialidadId);
 }

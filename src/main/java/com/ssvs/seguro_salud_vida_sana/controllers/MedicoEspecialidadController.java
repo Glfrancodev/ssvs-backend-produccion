@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ssvs.seguro_salud_vida_sana.models.Medico;
 import com.ssvs.seguro_salud_vida_sana.models.MedicoEspecialidad;
 import com.ssvs.seguro_salud_vida_sana.services.MedicoEspecialidadService;
 
@@ -73,6 +74,11 @@ public class MedicoEspecialidadController {
         return medicoEspecialidad != null 
                 ? ResponseEntity.ok(medicoEspecialidad) 
                 : ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/medico/especialidad/{especialidadId}")
+    public List<Medico> obtenerMedicosPorEspecialidad(@PathVariable Long especialidadId) {
+        return medicoEspecialidadService.obtenerMedicosPorEspecialidad(especialidadId);
     }
 
 }

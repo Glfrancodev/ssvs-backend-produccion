@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssvs.seguro_salud_vida_sana.models.Medico;
 import com.ssvs.seguro_salud_vida_sana.models.MedicoEspecialidad;
 import com.ssvs.seguro_salud_vida_sana.repositories.MedicoEspecialidadRepository;
 
@@ -41,6 +42,13 @@ public class MedicoEspecialidadService {
 
     public MedicoEspecialidad findByEspecialidadAndMedico(Long especialidadId, Long medicoId) {
         return medicoEspecialidadRepository.findByEspecialidadIdAndMedicoId(especialidadId, medicoId);
+    }
+
+    public List<Medico> obtenerMedicosPorEspecialidad(Long especialidadId) {
+        return medicoEspecialidadRepository.findByEspecialidadId(especialidadId)
+                .stream()
+                .map(MedicoEspecialidad::getMedico)
+                .toList();
     }
 
 }
