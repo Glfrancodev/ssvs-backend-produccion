@@ -20,7 +20,7 @@ import com.ssvs.seguro_salud_vida_sana.services.PermisoService;
 
 @RestController
 @RequestMapping("/api/permiso")
-// @CrossOrigin(origins = "*")
+@CrossOrigin(origins = {"http://192.168.1.9", "https://ssvs-frontend-produccion-production.up.railway.app/"})
 public class PermisoController {
   @Autowired
   private PermisoService permisoService;
