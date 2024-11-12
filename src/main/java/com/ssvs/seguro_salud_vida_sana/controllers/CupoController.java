@@ -108,4 +108,23 @@ public class CupoController {
         return ResponseEntity.ok(cupos);
     }
 
+    @PutMapping("/no/reservar/{id}")
+    public ResponseEntity<Cupo> quitarCupo(@PathVariable Long id, @RequestBody Cupo cupo) {
+        Optional<Cupo> cupoOptional = cupoService.getCupoById(id);
+        if (cupoOptional.isPresent()) {
+            Cupo cupoExistente = cupoOptional.get();
+            
+            // Actualizar solo los campos necesarios
+            cupoExistente.setFechaReservado(cupo.getFechaReservado());
+            cupoExistente.setEstado(cupo.getEstado());
+            cupoExistente.setAsegurado(cupo.getAsegurado());
+            
+            // Guardar el cupo actualizado
+            Cupo cupoActualizado = cupoService.saveCupo(cupoExistente);
+            return ResponseEntity.ok(cupoActualizado);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
