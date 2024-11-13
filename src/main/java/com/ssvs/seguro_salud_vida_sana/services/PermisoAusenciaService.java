@@ -1,15 +1,12 @@
 package com.ssvs.seguro_salud_vida_sana.services;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ssvs.seguro_salud_vida_sana.models.Horario;
 import com.ssvs.seguro_salud_vida_sana.models.PermisoAusencia;
-import com.ssvs.seguro_salud_vida_sana.repositories.HorarioRepository;
 import com.ssvs.seguro_salud_vida_sana.repositories.PermisoAusenciaRepository;
 
 @Service
