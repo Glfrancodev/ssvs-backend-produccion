@@ -24,6 +24,11 @@ public class ArchivoController {
     public ResponseEntity<Map<String, String>> subirArchivo(@RequestParam("archivo") MultipartFile archivo,
                                                             @RequestParam("consultaId") Long consultaId) {
         try {
+            // Validar el tamaño del archivo (50MB = 50 * 1024 * 1024 bytes)
+            if (archivo.getSize() > 50 * 1024 * 1024) {
+                return ResponseEntity.status(413).body(Map.of("error", "El archivo supera el tamaño máximo permitido de 50MB"));
+            }
+    
             // Subir el archivo a MinIO y obtener la URL
             String url = archivoService.subirArchivo(archivo.getOriginalFilename(),
                     archivo.getInputStream(), archivo.getContentType());
