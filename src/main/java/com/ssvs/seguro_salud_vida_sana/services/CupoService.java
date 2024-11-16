@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.ssvs.seguro_salud_vida_sana.models.Cupo;
@@ -53,5 +54,25 @@ public class CupoService {
         return cupoRepository.existsByAseguradoIdAndFechaReservado(aseguradoId, fecha);
     }
 
+    public void actualizarCuposVencidos() {
+        LocalDate fechaActual = LocalDate.now();
+        List<Cupo> cupos = cupoRepository.findAll();
+
+        cupos.stream()
+            .filter(cupo -> {
+                LocalDate fechaHorario = cupo.getHorario().getFecha();
+                return (fechaHorario.isBefore(fechaActual) && 
+                        (cupo.getEstado().equals("Libre") || cupo.getEstado().equals("Ocupado")));
+            })
+            .forEach(cupo -> {
+                cupo.setEstado("Vencido");
+                cupoRepository.save(cupo);
+            });
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?") // Ejecución diaria a medianoche
+    public void actualizarCuposVencidosProgramado() {
+        actualizarCuposVencidos();
+    }
 
 }

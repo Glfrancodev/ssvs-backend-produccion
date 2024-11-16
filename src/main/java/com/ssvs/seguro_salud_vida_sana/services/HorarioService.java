@@ -22,13 +22,10 @@ public class HorarioService {
     // Prueba Agregado para generar cupos segun horario
     @Autowired
     private CupoRepository cupoRepository;
+
     public Horario crearHorario(Horario horario) {
-        // Guardar el horario
         Horario nuevoHorario = horarioRepository.save(horario);
-
-        // Calcular los cupos
         generarCupos(nuevoHorario);
-
         return nuevoHorario;
     }
 
@@ -37,56 +34,51 @@ public class HorarioService {
         LocalTime horaInicio = horario.getHoraInicio();
         LocalTime horaFinal = horario.getHoraFinal();
 
-        // Calcular la duración en minutos del horario
         long duracionTotal = java.time.Duration.between(horaInicio, horaFinal).toMinutes();
-
-        // Calcular la duración de cada cupo en minutos
         long duracionCupo = duracionTotal / cantidadCupos;
 
-        // Crear cupos y asignarles la hora de atención
         for (int i = 0; i < cantidadCupos; i++) {
             Cupo cupo = new Cupo();
-            cupo.setNumero(i + 1); // Número del cupo
+            cupo.setNumero(i + 1);
             cupo.setEstado("Libre");
             cupo.setHorario(horario);
-
-            // Calcular la hora específica para el cupo
             LocalTime horaCupo = horaInicio.plusMinutes(duracionCupo * i);
             cupo.setHora(horaCupo);
-
-            // Guardar el cupo
             cupoRepository.save(cupo);
         }
     }
 
-
-
-    // Crear un nuevo horario
     public Horario saveHorario(Horario horario) {
         return horarioRepository.save(horario);
     }
 
-    // Obtener todos los horarios
+    // Obtener todos los horarios con filtro por fecha
     public List<Horario> getHorarios() {
-        return horarioRepository.findAll();
+        return horarioRepository.findAll().stream()
+                .filter(horario -> !horario.getFecha().isBefore(LocalDate.now()))
+                .toList();
     }
 
     // Buscar horario por ID
     public Optional<Horario> getHorarioById(Long id) {
-        return horarioRepository.findById(id);
+        return horarioRepository.findById(id)
+                .filter(horario -> !horario.getFecha().isBefore(LocalDate.now()));
     }
 
-    // Eliminar horario
     public void deleteHorario(Long id) {
         horarioRepository.deleteById(id);
     }
 
     public List<Horario> findHorariosByMedicoEspecialidadId(Long medicoEspecialidadId) {
-        return horarioRepository.findByMedicoEspecialidadId(medicoEspecialidadId);
+        return horarioRepository.findByMedicoEspecialidadId(medicoEspecialidadId).stream()
+                .filter(horario -> !horario.getFecha().isBefore(LocalDate.now()))
+                .toList();
     }
 
     public List<Horario> obtenerHorariosPorMedicoYFecha(Long medicoId, LocalDate fecha) {
-        return horarioRepository.findHorariosByMedicoAndFechaAfter(medicoId, fecha);
+        return horarioRepository.findHorariosByMedicoAndFechaAfter(medicoId, fecha).stream()
+                .filter(horario -> !horario.getFecha().isBefore(LocalDate.now()))
+                .toList();
     }
 
     public List<Horario> guardarHorarios(List<Horario> horarios) {

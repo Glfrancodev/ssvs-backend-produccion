@@ -12,8 +12,13 @@ import com.ssvs.seguro_salud_vida_sana.models.Horario;
 
 @Repository
 public interface HorarioRepository extends JpaRepository<Horario, Long> {
-    // Puedes agregar métodos de búsqueda personalizados si es necesario
+
     List<Horario> findByMedicoEspecialidadId(Long medicoEspecialidadId);
+
     @Query("SELECT h FROM Horario h WHERE h.medicoEspecialidad.medico.id = :medicoId AND h.fecha >= :fecha")
     List<Horario> findHorariosByMedicoAndFechaAfter(@Param("medicoId") Long medicoId, @Param("fecha") LocalDate fecha);
+
+    @Query("SELECT h FROM Horario h WHERE h.fecha >= :fechaActual")
+    List<Horario> findAllValidHorarios(@Param("fechaActual") LocalDate fechaActual);
 }
+
