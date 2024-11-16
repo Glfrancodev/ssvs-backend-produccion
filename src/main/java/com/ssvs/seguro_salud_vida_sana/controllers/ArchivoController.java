@@ -21,8 +21,8 @@ public class ArchivoController {
     private ArchivoService archivoService;
 
     @PostMapping("/subir")
-    public ResponseEntity<String> subirArchivo(@RequestParam("archivo") MultipartFile archivo,
-                                               @RequestParam("consultaId") Long consultaId) {
+    public ResponseEntity<Map<String, String>> subirArchivo(@RequestParam("archivo") MultipartFile archivo,
+                                                            @RequestParam("consultaId") Long consultaId) {
         try {
             // Subir el archivo a MinIO y obtener la URL
             String url = archivoService.subirArchivo(archivo.getOriginalFilename(),
@@ -32,11 +32,14 @@ public class ArchivoController {
             archivoService.registrarArchivoEnDB(archivo.getOriginalFilename(),
                     archivo.getContentType(), archivo.getSize(), url, consultaId);
     
-            return ResponseEntity.ok(url);
+            // Crear respuesta JSON con la URL
+            Map<String, String> response = Map.of("url", url);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Error al subir el archivo: " + e.getMessage());
+            return ResponseEntity.status(500).body(Map.of("error", "Error al subir el archivo: " + e.getMessage()));
         }
     }
+    
 
     @GetMapping("/descargar/{nombreArchivo}")
     public ResponseEntity<?> descargarArchivo(@PathVariable String nombreArchivo) {
