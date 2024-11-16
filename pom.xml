@@ -82,6 +82,14 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- MINIO SUBIDA DE ARCHIVOS INICIO-->
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>8.5.7</version> <!-- Cambia a la última versión estable si es necesario -->
+        </dependency>
+        <!-- MINIO SUBIDA DE ARCHIVOS FIN -->
+
     </dependencies>
 
     <build>
