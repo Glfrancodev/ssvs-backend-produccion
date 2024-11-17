@@ -1,5 +1,7 @@
 package com.ssvs.seguro_salud_vida_sana.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +14,18 @@ public class Calificacion {
 
     @Column(name = "estrella", nullable = false)
     private int estrella;
+
+    // Relacion Calificacion con Asegurado n a 1
+    @ManyToOne()
+    @JoinColumn(name = "asegurado_id")
+    @JsonIgnoreProperties("calificaciones")
+    private Asegurado asegurado;
+
+    // Relacion Calificacion con Medico n a 1
+    @ManyToOne()
+    @JoinColumn(name = "medico_id")
+    @JsonIgnoreProperties("calificaciones")
+    private Medico medico;
 
     // Constructor por defecto
     public Calificacion() {
@@ -38,4 +52,21 @@ public class Calificacion {
     public void setEstrella(int estrella) {
         this.estrella = estrella;
     }
+
+    public Asegurado getAsegurado() {
+        return asegurado;
+    }
+
+    public void setAsegurado(Asegurado asegurado) {
+        this.asegurado = asegurado;
+    }
+
+    public Medico getMedico() {
+        return medico;
+    }
+
+    public void setMedico(Medico medico) {
+        this.medico = medico;
+    }
+
 }

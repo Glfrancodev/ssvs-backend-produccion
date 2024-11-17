@@ -80,8 +80,8 @@ public class CupoController {
         Optional<Cupo> cupoOptional = cupoService.getCupoById(id);
         if (cupoOptional.isPresent()) {
             Cupo cupoExistente = cupoOptional.get();
-            Long aseguradoId = cupo.getAsegurado().getId();
-            LocalDate fechaActual = LocalDate.now();
+            // Long aseguradoId = cupo.getAsegurado().getId();
+            // LocalDate fechaActual = LocalDate.now();
             
             // // Verificar si el asegurado ya tiene un cupo reservado para hoy
             // if (cupoService.existeCupoParaFechaActual(aseguradoId, fechaActual)) {

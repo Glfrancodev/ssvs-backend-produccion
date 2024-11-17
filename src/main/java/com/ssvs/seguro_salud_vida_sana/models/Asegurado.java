@@ -57,6 +57,11 @@ public class Asegurado {
   @JsonIgnore
   private Set<Notificacion> notificaciones;
 
+  // Relacion Asegurado con Calificacion 1 a n
+  @OneToMany(mappedBy = "asegurado", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Set<Calificacion> calificaciones;
+
   // Constructor por defecto
   public Asegurado() {
   }
@@ -131,4 +136,13 @@ public class Asegurado {
   public void setNotificaciones(Set<Notificacion> notificaciones) {
     this.notificaciones = notificaciones;
   }
+
+  public Set<Calificacion> getCalificaciones() {
+    return calificaciones;
+  }
+
+  public void setCalificaciones(Set<Calificacion> calificaciones) {
+    this.calificaciones = calificaciones;
+  }
+
 }

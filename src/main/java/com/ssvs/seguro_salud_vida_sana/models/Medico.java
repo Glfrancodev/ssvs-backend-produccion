@@ -44,6 +44,11 @@ public class Medico {
   @JsonIgnore
   private Set<MedicoEspecialidad> medicoEspecialidades;
 
+  // Relacion Medico con Notificacion 1 a n
+  @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonIgnore
+  private Set<Notificacion> notificaciones;
+
   // Constructor por defecto
   public Medico() {
   }
@@ -90,6 +95,14 @@ public class Medico {
 
   public void setMedicoEspecialidades(Set<MedicoEspecialidad> medicoEspecialidades) {
     this.medicoEspecialidades = medicoEspecialidades;
+  }
+
+  public Set<Notificacion> getNotificaciones() {
+    return notificaciones;
+  }
+
+  public void setNotificaciones(Set<Notificacion> notificaciones) {
+    this.notificaciones = notificaciones;
   }
 
 }
