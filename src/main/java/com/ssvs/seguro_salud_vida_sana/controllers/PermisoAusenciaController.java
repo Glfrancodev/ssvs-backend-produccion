@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import com.ssvs.seguro_salud_vida_sana.models.Asegurado;
+import com.ssvs.seguro_salud_vida_sana.models.Cupo;
 import com.ssvs.seguro_salud_vida_sana.models.Horario;
+import com.ssvs.seguro_salud_vida_sana.models.Notificacion;
 import com.ssvs.seguro_salud_vida_sana.models.PermisoAusencia;
 import com.ssvs.seguro_salud_vida_sana.services.HorarioService;
+import com.ssvs.seguro_salud_vida_sana.services.NotificacionService;
 import com.ssvs.seguro_salud_vida_sana.services.PermisoAusenciaService;
 
 @RestController
@@ -22,6 +26,9 @@ public class PermisoAusenciaController {
     private PermisoAusenciaService permisoAusenciaService;
     @Autowired
     private HorarioService horarioService;
+
+    @Autowired
+    private NotificacionService notificacionService;
 
     // Obtener todos los permisos de ausencia
     @GetMapping
@@ -67,19 +74,44 @@ public class PermisoAusenciaController {
         }
     }
 
-    // Método para mover horarios un día hacia adelante
+    // Método para mover horarios un día hacia adelante y enviar notificaciones
     private void moverHorarios(Long medicoId, LocalDate fechaPermiso) {
         // Obtener los horarios posteriores a la fecha del permiso
         List<Horario> horarios = horarioService.obtenerHorariosPorMedicoYFecha(medicoId, fechaPermiso);
 
-        // Incrementar en un día la fecha de cada horario
         for (Horario horario : horarios) {
-            horario.setFecha(horario.getFecha().plusDays(1));
+            LocalDate fechaAnterior = horario.getFecha(); // Fecha actual del horario
+            LocalDate nuevaFecha = fechaAnterior.plusDays(1); // Incrementar en un día la fecha
+
+            // Actualizar la fecha del horario
+            horario.setFecha(nuevaFecha);
+
+            // Obtener los cupos reservados para el horario actual
+            List<Cupo> cuposReservados = horarioService.obtenerCuposReservadosPorHorario(horario.getId());
+
+            // Enviar notificaciones a los asegurados con cupos reservados
+            for (Cupo cupo : cuposReservados) {
+                Asegurado asegurado = cupo.getAsegurado();
+                if (asegurado != null) {
+                    String mensaje = String.format(
+                        "Su cupo para la especialidad %s con el médico %s ha sido movido del %s para el %s.",
+                        horario.getMedicoEspecialidad().getEspecialidad().getNombre(),
+                        horario.getMedicoEspecialidad().getMedico().getUsuario().getNombreCompleto(),
+                        fechaAnterior,
+                        nuevaFecha
+                    );
+
+                    // Crear y guardar la notificación
+                    Notificacion notificacion = new Notificacion(mensaje, asegurado);
+                    notificacionService.saveNotificacion(notificacion);
+                }
+            }
         }
 
         // Guardar los horarios actualizados
         horarioService.guardarHorarios(horarios);
     }
+
 
 
     // Eliminar un permiso de ausencia por ID

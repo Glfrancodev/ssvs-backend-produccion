@@ -132,4 +132,9 @@ public class Usuario {
   public void setMedico(Medico medico){
     this.medico = medico;
   }
+
+  public String getNombreCompleto() {
+    return this.nombre + " " + this.apellido;
+}
+
 }

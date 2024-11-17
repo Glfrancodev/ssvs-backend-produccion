@@ -85,4 +85,8 @@ public class HorarioService {
         return horarioRepository.saveAll(horarios);
     }
 
+    public List<Cupo> obtenerCuposReservadosPorHorario(Long horarioId) {
+        return cupoRepository.findByHorarioIdAndEstado(horarioId, "Ocupado");
+    }
+
 }
