@@ -20,4 +20,8 @@ public interface CalificacionRepository extends JpaRepository<Calificacion, Long
     @Query("SELECT AVG(c.estrella) FROM Calificacion c WHERE c.medico.id = :medicoId")
     Double obtenerPromedioCalificacionPorMedicoId(@Param("medicoId") Long medicoId);
 
+    @Query("SELECT c FROM Calificacion c WHERE c.asegurado.id = :aseguradoId AND c.medico.id = :medicoId")
+    Calificacion findByAseguradoIdAndMedicoId(@Param("aseguradoId") Long aseguradoId, @Param("medicoId") Long medicoId);
+    
+
 }

@@ -38,4 +38,9 @@ public class CalificacionService {
     public void deleteCalificacion(Long id) {
         calificacionRepository.deleteById(id);
     }
+
+    public Calificacion buscarCalificacionPorAseguradoYMedico(Long aseguradoId, Long medicoId) {
+        return calificacionRepository.findByAseguradoIdAndMedicoId(aseguradoId, medicoId);
+    }
+
 }

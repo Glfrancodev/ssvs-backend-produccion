@@ -47,4 +47,19 @@ public class CalificacionController {
         calificacionService.deleteCalificacion(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<Calificacion> buscarCalificacion(
+        @RequestParam Long aseguradoId,
+        @RequestParam Long medicoId
+    ) {
+        Calificacion calificacion = calificacionService.buscarCalificacionPorAseguradoYMedico(aseguradoId, medicoId);
+        if (calificacion != null) {
+            return ResponseEntity.ok(calificacion);
+        } else {
+            return ResponseEntity.noContent().build();
+        }
+    }
+    
+
 }
