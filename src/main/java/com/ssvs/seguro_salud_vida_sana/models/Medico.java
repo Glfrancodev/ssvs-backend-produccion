@@ -44,10 +44,10 @@ public class Medico {
   @JsonIgnore
   private Set<MedicoEspecialidad> medicoEspecialidades;
 
-  // Relacion Medico con Notificacion 1 a n
+  // Relacion Medico con Calificacion 1 a n
   @OneToMany(mappedBy = "medico", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   @JsonIgnore
-  private Set<Notificacion> notificaciones;
+  private Set<Calificacion> calificaciones;
 
   // Constructor por defecto
   public Medico() {
@@ -97,12 +97,12 @@ public class Medico {
     this.medicoEspecialidades = medicoEspecialidades;
   }
 
-  public Set<Notificacion> getNotificaciones() {
-    return notificaciones;
+  public Set<Calificacion> getCalificaciones() {
+    return calificaciones;
   }
 
-  public void setNotificaciones(Set<Notificacion> notificaciones) {
-    this.notificaciones = notificaciones;
+  public void setCalificaciones(Set<Calificacion> calificaciones) {
+    this.calificaciones = calificaciones;
   }
 
 }
