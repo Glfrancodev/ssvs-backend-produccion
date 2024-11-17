@@ -61,5 +61,21 @@ public class CalificacionController {
         }
     }
     
+    // Actualizar una calificación existente
+    @PutMapping("/{id}")
+    public ResponseEntity<Calificacion> actualizarCalificacion(
+            @PathVariable Long id,
+            @RequestBody Calificacion calificacionActualizada) {
+        Calificacion calificacion = calificacionService.getCalificacionById(id);
+
+        if (calificacion != null) {
+            calificacion.setEstrella(calificacionActualizada.getEstrella());
+            calificacionService.saveCalificacion(calificacion);
+            return ResponseEntity.ok(calificacion);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
 }

@@ -43,4 +43,9 @@ public class CalificacionService {
         return calificacionRepository.findByAseguradoIdAndMedicoId(aseguradoId, medicoId);
     }
 
+    public Calificacion getCalificacionById(Long id) {
+        return calificacionRepository.findById(id)
+                .orElse(null); // Retorna null si no encuentra la calificación
+    }
+
 }
