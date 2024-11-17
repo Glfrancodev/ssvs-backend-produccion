@@ -74,43 +74,46 @@ public class PermisoAusenciaController {
         }
     }
 
-    // Método para mover horarios un día hacia adelante y enviar notificaciones
     private void moverHorarios(Long medicoId, LocalDate fechaPermiso) {
         // Obtener los horarios posteriores a la fecha del permiso
         List<Horario> horarios = horarioService.obtenerHorariosPorMedicoYFecha(medicoId, fechaPermiso);
-
+    
+        // Procesar cada horario
         for (Horario horario : horarios) {
-            LocalDate fechaAnterior = horario.getFecha(); // Fecha actual del horario
-            LocalDate nuevaFecha = fechaAnterior.plusDays(1); // Incrementar en un día la fecha
-
-            // Actualizar la fecha del horario
-            horario.setFecha(nuevaFecha);
-
+            LocalDate fechaAnterior = horario.getFecha(); // Guardar la fecha actual del horario antes de modificarla
+            LocalDate nuevaFecha = fechaAnterior.plusDays(1); // Calcular la nueva fecha
+    
             // Obtener los cupos reservados para el horario actual
             List<Cupo> cuposReservados = horarioService.obtenerCuposReservadosPorHorario(horario.getId());
-
+    
             // Enviar notificaciones a los asegurados con cupos reservados
             for (Cupo cupo : cuposReservados) {
                 Asegurado asegurado = cupo.getAsegurado();
                 if (asegurado != null) {
+                    // Generar el mensaje de la notificación usando la fecha original y la nueva
                     String mensaje = String.format(
                         "Su cupo para la especialidad %s con el médico %s ha sido movido del %s para el %s.",
                         horario.getMedicoEspecialidad().getEspecialidad().getNombre(),
-                        horario.getMedicoEspecialidad().getMedico().getUsuario().getNombreCompleto(),
-                        fechaAnterior,
-                        nuevaFecha
+                        horario.getMedicoEspecialidad().getMedico().getUsuario().getNombre() + " " +
+                        horario.getMedicoEspecialidad().getMedico().getUsuario().getApellido(),
+                        fechaAnterior, // Usar la fecha anterior guardada antes de actualizar el horario
+                        nuevaFecha // Usar la nueva fecha calculada
                     );
-
+    
                     // Crear y guardar la notificación
                     Notificacion notificacion = new Notificacion(mensaje, asegurado);
                     notificacionService.saveNotificacion(notificacion);
                 }
             }
+    
+            // Actualizar la fecha del horario
+            horario.setFecha(nuevaFecha);
         }
-
-        // Guardar los horarios actualizados
+    
+        // Guardar los horarios actualizados después de enviar las notificaciones
         horarioService.guardarHorarios(horarios);
     }
+    
 
 
 
