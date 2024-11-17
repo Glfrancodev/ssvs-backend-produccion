@@ -83,10 +83,10 @@ public class CupoController {
             Long aseguradoId = cupo.getAsegurado().getId();
             LocalDate fechaActual = LocalDate.now();
             
-            // Verificar si el asegurado ya tiene un cupo reservado para hoy
-            if (cupoService.existeCupoParaFechaActual(aseguradoId, fechaActual)) {
-                return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
-            }
+            // // Verificar si el asegurado ya tiene un cupo reservado para hoy
+            // if (cupoService.existeCupoParaFechaActual(aseguradoId, fechaActual)) {
+            //     return ResponseEntity.status(HttpStatus.CONFLICT).body(null);
+            // }
             
             // Actualizar solo los campos necesarios
             cupoExistente.setFechaReservado(cupo.getFechaReservado());

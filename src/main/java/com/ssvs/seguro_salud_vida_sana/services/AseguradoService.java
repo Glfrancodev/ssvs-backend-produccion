@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssvs.seguro_salud_vida_sana.models.Asegurado;
 import com.ssvs.seguro_salud_vida_sana.models.HistoriaClinica;
+import com.ssvs.seguro_salud_vida_sana.models.Notificacion;
 import com.ssvs.seguro_salud_vida_sana.repositories.AseguradoRepository;
 import com.ssvs.seguro_salud_vida_sana.repositories.HistoriaClinicaRepository;
 
@@ -18,6 +19,7 @@ public class AseguradoService {
 
     @Autowired
     private AseguradoRepository aseguradoRepository;
+    
     @Autowired
     private HistoriaClinicaRepository historiaClinicaRepository;
 
@@ -57,6 +59,17 @@ public class AseguradoService {
     public Asegurado obtenerAseguradoPorCorreo(String correo) {
         return aseguradoRepository.findByUsuarioCorreo(correo)
                 .orElseThrow(() -> new EntityNotFoundException("Asegurado no encontrado con el correo: " + correo));
+    }
+
+    // Obtener notificaciones por ID de asegurado
+    public List<Notificacion> obtenerNotificacionesPorAseguradoId(Long aseguradoId) {
+        Optional<Asegurado> aseguradoOptional = aseguradoRepository.findById(aseguradoId);
+        if (aseguradoOptional.isPresent()) {
+            Asegurado asegurado = aseguradoOptional.get();
+            return List.copyOf(asegurado.getNotificaciones());
+        } else {
+            throw new EntityNotFoundException("Asegurado no encontrado con el ID: " + aseguradoId);
+        }
     }
 
 }

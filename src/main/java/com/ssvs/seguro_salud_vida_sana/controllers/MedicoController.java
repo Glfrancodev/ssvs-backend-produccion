@@ -84,4 +84,14 @@ public class MedicoController {
         return medicoService.obtenerMedicoPorCorreo(correo);
     }
 
+    // Obtener promedio de calificación por ID de médico
+    @GetMapping("/{id}/promedio-calificaciones")
+    public ResponseEntity<Double> obtenerPromedioCalificaciones(@PathVariable Long id) {
+        Double promedio = medicoService.obtenerPromedioCalificacionPorMedicoId(id);
+        if (promedio != null) {
+            return ResponseEntity.ok(promedio);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssvs.seguro_salud_vida_sana.models.Especialidad;
 import com.ssvs.seguro_salud_vida_sana.models.Medico;
+import com.ssvs.seguro_salud_vida_sana.repositories.CalificacionRepository;
 import com.ssvs.seguro_salud_vida_sana.repositories.MedicoRepository;
 
 @Service
@@ -15,6 +16,9 @@ public class MedicoService {
 
     @Autowired
     private MedicoRepository medicoRepository;
+
+    @Autowired
+    private CalificacionRepository calificacionRepository;
 
     // Crear un nuevo medico
     public Medico saveMedico(Medico medico) {
@@ -45,6 +49,11 @@ public class MedicoService {
     public Medico obtenerMedicoPorCorreo(String correo) {
         Optional<Medico> medico = medicoRepository.findByUsuarioCorreo(correo);
         return medico.orElse(null);
+    }
+
+    // Obtener promedio de calificaciones por ID de médico
+    public Double obtenerPromedioCalificacionPorMedicoId(Long medicoId) {
+        return calificacionRepository.obtenerPromedioCalificacionPorMedicoId(medicoId);
     }
 
 }

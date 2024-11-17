@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssvs.seguro_salud_vida_sana.models.Asegurado;
+import com.ssvs.seguro_salud_vida_sana.models.Notificacion;
 import com.ssvs.seguro_salud_vida_sana.services.AseguradoService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @RestController
 @RequestMapping("/api/asegurado")
@@ -76,6 +79,17 @@ public class AseguradoController {
     @GetMapping("/correo/{correo}")
     public Asegurado obtenerAseguradoPorCorreo(@PathVariable String correo) {
         return aseguradoService.obtenerAseguradoPorCorreo(correo);
+    }
+
+    // Obtener notificaciones por ID de asegurado
+    @GetMapping("/notificaciones/{id}")
+    public ResponseEntity<List<Notificacion>> obtenerNotificacionesPorAseguradoId(@PathVariable Long id) {
+        try {
+            List<Notificacion> notificaciones = aseguradoService.obtenerNotificacionesPorAseguradoId(id);
+            return ResponseEntity.ok(notificaciones);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
